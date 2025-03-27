@@ -1,9 +1,9 @@
 :root {
     --primary-color: #2563eb;
     --secondary-color: #1e40af;
-    --text-color: #1f2937;
-    --bg-color: #ffffff;
-    --accent-color: #3b82f6;
+    --bg-color: #0f172a;
+    --text-color: #e2e8f0;
+    --card-bg: rgba(30, 41, 59, 0.7);
 }
 
 * {
@@ -14,29 +14,108 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    background: var(--bg-color);
     color: var(--text-color);
+    line-height: 1.6;
 }
 
-/* Header Styles */
-header {
+/* Particle Background */
+#particles-js {
     position: fixed;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    z-index: 1;
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: 700;
+/* Glass Morphism Nav */
+.glass-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
     color: var(--primary-color);
 }
 
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary-color), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.typewriter {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Experience Cards */
+.exp-card, .edu-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exp-card:hover, .edu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.exp-header, .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Sections */
+section {
+    padding: 5rem 2rem;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 /* Language Toggle */
-.lang-toggle {
+.lang-btn {
     background: var(--primary-color);
     color: white;
     border: none;
@@ -46,75 +125,12 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.lang-toggle:hover {
+.lang-btn:hover {
     background: var(--secondary-color);
 }
 
-/* Experience Cards */
-.experience-card {
-    background: white;
-    border-radius: 10px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.experience-card:hover {
-    transform: translateY(-5px);
-}
-
-.exp-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.experience-card h3 {
-    color: var(--primary-color);
-}
-
-.experience-card ul {
-    list-style-type: none;
-    padding-left: 1rem;
-}
-
-.experience-card li {
-    position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.experience-card li::before {
-    content: "▹";
-    position: absolute;
-    left: 0;
-    color: var(--accent-color);
-}
-
-/* Skills Grid */
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
-.skill-category {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.skill-category h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
 /* Contact Section */
-.contact-button {
+.contact-btn {
     display: inline-block;
     padding: 1rem 2rem;
     background: var(--primary-color);
@@ -124,22 +140,22 @@ header {
     transition: transform 0.3s ease;
 }
 
-.contact-button:hover {
+.contact-btn:hover {
     transform: translateY(-2px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    nav ul {
+    .nav-links {
         display: none;
     }
 
-    .experience-card {
-        padding: 1.5rem;
+    .hero h1 {
+        font-size: 2.5rem;
     }
 
-    .exp-header {
+    .exp-header, .edu-header {
         flex-direction: column;
-        align-items: flex-start;
+        text-align: center;
     }
 }
