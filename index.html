@@ -4,88 +4,279 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arya Valadbeigi - Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-black text-white">
-    <!-- Hero Section with Cylinder Animation -->
-    <section id="hero" class="h-screen flex items-center justify-center relative overflow-hidden">
-        <div id="cylinder" class="w-64 h-96 relative">
-            <div class="cylinder-body"></div>
-            <div class="cylinder-piston"></div>
-        </div>
-    </section>
+<body>
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
 
-    <!-- Personality Traits Section -->
-    <section id="personality" class="min-h-screen relative">
-        <div id="scattered-text" class="absolute inset-0">
-            <!-- Text will be scattered here -->
-        </div>
-    </section>
-
-    <!-- Experience Sections -->
-    <section id="dhl" class="min-h-screen bg-yellow-500 relative">
-        <div class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-bold mb-8">DHL Express</h2>
-            <div class="bg-white rounded-lg p-8 shadow-xl">
-                <h3 class="text-2xl font-semibold mb-4">Software Developer</h3>
-                <p class="text-gray-800">2023 - Present</p>
-                <ul class="list-disc list-inside mt-4 text-gray-800">
-                    <li>Development of a web application for the DHL Express IT department</li>
-                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
-                    <li>Integration of various APIs and services</li>
-                </ul>
+    <header>
+        <nav>
+            <div class="logo">ARYA <span>V</span></div>
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
-        </div>
-    </section>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <section id="bertrandt" class="min-h-screen bg-blue-500 relative">
-        <div class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-bold mb-8">Bertrandt</h2>
-            <div class="bg-white rounded-lg p-8 shadow-xl">
-                <h3 class="text-2xl font-semibold mb-4">Software Developer</h3>
-                <p class="text-gray-800">2022 - 2023</p>
-                <ul class="list-disc list-inside mt-4 text-gray-800">
-                    <li>Development of a web application for the Mercedes-Benz IT department</li>
-                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
-                    <li>Integration of various APIs and services</li>
-                </ul>
+    <main>
+        <!-- Hero Section with Cylinder Animation -->
+        <section id="home" class="hero">
+            <div id="canvas-container">
+                <!-- Three.js cylinder animation will be inserted here -->
             </div>
-        </div>
-    </section>
-
-    <section id="hiwistelle" class="min-h-screen bg-white relative">
-        <div class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-bold mb-8 text-black">HiWi Stelle</h2>
-            <div class="bg-gray-100 rounded-lg p-8 shadow-xl">
-                <h3 class="text-2xl font-semibold mb-4 text-black">Research Assistant</h3>
-                <p class="text-gray-800">2021 - 2022</p>
-                <ul class="list-disc list-inside mt-4 text-gray-800">
-                    <li>Research and development of a web application for the University of Stuttgart</li>
-                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
-                    <li>Integration of various APIs and services</li>
-                </ul>
+            <div class="hero-content">
+                <h1>Arya <span>Valadbeigi</span></h1>
+                <div class="animated-text" id="animated-text">
+                    <!-- This will be filled with unsorted words that animate into readable text -->
+                </div>
+                <div class="cta-buttons">
+                    <a href="#experience" class="btn primary">View My Work</a>
+                    <a href="#contact" class="btn secondary">Contact Me</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="tehran" class="min-h-screen bg-red-500 relative">
-        <div class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-bold mb-8">Tehran</h2>
-            <div class="bg-white rounded-lg p-8 shadow-xl">
-                <h3 class="text-2xl font-semibold mb-4">Software Developer</h3>
-                <p class="text-gray-800">2020 - 2021</p>
-                <ul class="list-disc list-inside mt-4 text-gray-800">
-                    <li>Development of a web application for the Tehran IT department</li>
-                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
-                    <li>Integration of various APIs and services</li>
-                </ul>
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="section-container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>As a multi-disciplinary professional with expertise in automotive engineering and blockchain technology, I bring innovation and technical excellence to challenging projects.</p>
+                        <p>Currently based in <strong>Stuttgart 70569</strong>, I combine my background in engineering with modern technologies to develop cutting-edge solutions.</p>
+                        
+                        <div class="personal-info">
+                            <div class="info-item">
+                                <span class="info-title">Location:</span>
+                                <span>Stuttgart 70569, Germany</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-title">Email:</span>
+                                <span>your.email@example.com</span>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <script src="script.js"></script>
+        <!-- Experience Section -->
+        <section id="experience" class="experience">
+            <div class="section-container">
+                <h2 class="section-title">Experience</h2>
+                
+                <!-- DHL Experience -->
+                <div class="job-card" id="dhl-job">
+                    <div class="job-background dhl-bg">
+                        <!-- DHL background with yellow color -->
+                    </div>
+                    <div class="job-content">
+                        <h3 class="job-title">Position at DHL</h3>
+                        <div class="job-details">
+                            <span class="job-company">DHL</span>
+                            <span class="job-duration">Duration</span>
+                        </div>
+                        <div class="job-description">
+                            <p>Detailed description of your role and achievements at DHL will be displayed here with an animation that transitions from a post box visual.</p>
+                            <ul class="job-responsibilities">
+                                <li>Responsibility 1</li>
+                                <li>Responsibility 2</li>
+                                <li>Achievement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bertrandt Experience -->
+                <div class="job-card" id="bertrandt-job">
+                    <div class="job-background bertrandt-bg">
+                        <!-- Bertrandt background with blue color -->
+                    </div>
+                    <div class="job-content">
+                        <h3 class="job-title">Position at Bertrandt</h3>
+                        <div class="job-details">
+                            <span class="job-company">Bertrandt</span>
+                            <span class="job-duration">Duration</span>
+                        </div>
+                        <div class="job-description">
+                            <p>Detailed description of your role and achievements at Bertrandt will be displayed here with an animation that transitions from DHL to an engine visual.</p>
+                            <ul class="job-responsibilities">
+                                <li>Responsibility 1</li>
+                                <li>Responsibility 2</li>
+                                <li>Achievement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- University of Stuttgart Experience -->
+                <div class="job-card" id="stuttgart-job">
+                    <div class="job-background stuttgart-bg">
+                        <!-- University of Stuttgart background -->
+                    </div>
+                    <div class="job-content">
+                        <h3 class="job-title">Hiwistelle</h3>
+                        <div class="job-details">
+                            <span class="job-company">University of Stuttgart</span>
+                            <span class="job-duration">Duration</span>
+                        </div>
+                        <div class="job-description">
+                            <p>Detailed description of your role and achievements at the University of Stuttgart.</p>
+                            <ul class="job-responsibilities">
+                                <li>Responsibility 1</li>
+                                <li>Responsibility 2</li>
+                                <li>Achievement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tehran Experience -->
+                <div class="job-card" id="tehran-job">
+                    <div class="job-background tehran-bg">
+                        <!-- Iran flag background -->
+                    </div>
+                    <div class="job-content">
+                        <h3 class="job-title">Position in Tehran</h3>
+                        <div class="job-details">
+                            <span class="job-company">Company in Tehran</span>
+                            <span class="job-duration">Duration</span>
+                        </div>
+                        <div class="job-description">
+                            <p>Detailed description of your role and achievements in Tehran.</p>
+                            <ul class="job-responsibilities">
+                                <li>Responsibility 1</li>
+                                <li>Responsibility 2</li>
+                                <li>Achievement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills">
+            <div class="section-container">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Automotive Engineering</h3>
+                        <div class="skill-bars">
+                            <div class="skill-bar">
+                                <div class="skill-name">CAD Design</div>
+                                <div class="skill-progress"><div class="progress" data-value="85%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-name">Engine Optimization</div>
+                                <div class="skill-progress"><div class="progress" data-value="90%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-name">Simulation</div>
+                                <div class="skill-progress"><div class="progress" data-value="80%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Blockchain Technology</h3>
+                        <div class="skill-bars">
+                            <div class="skill-bar">
+                                <div class="skill-name">Smart Contracts</div>
+                                <div class="skill-progress"><div class="progress" data-value="85%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-name">DApps Development</div>
+                                <div class="skill-progress"><div class="progress" data-value="80%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-name">Blockchain Architecture</div>
+                                <div class="skill-progress"><div class="progress" data-value="75%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="section-container">
+                <h2 class="section-title">Contact Me</h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Location</h3>
+                                <p>Stuttgart 70569, Germany</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p>your.email@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="copyright">&copy; <span id="current-year"></span> Arya Valadbeigi. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="js/cylinder.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
