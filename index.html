@@ -1,47 +1,91 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arya Valadbeigi - Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
-<body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="engine-animation">
-            <div class="piston"></div>
+<body class="bg-black text-white">
+    <!-- Hero Section with Cylinder Animation -->
+    <section id="hero" class="h-screen flex items-center justify-center relative overflow-hidden">
+        <div id="cylinder" class="w-64 h-96 relative">
+            <div class="cylinder-body"></div>
+            <div class="cylinder-piston"></div>
         </div>
-        <h1 class="main-title">Arya Valadbeigi</h1>
-        <p class="subtitle">Maschinenbau • Projektmanagement • Autonomes Fahren</p>
-        <div class="scroll-indicator">
-            <span>Scroll to Start Engine</span>
-            <i class="fas fa-chevron-down"></i>
+    </section>
+
+    <!-- Personality Traits Section -->
+    <section id="personality" class="min-h-screen relative">
+        <div id="scattered-text" class="absolute inset-0">
+            <!-- Text will be scattered here -->
         </div>
     </section>
 
     <!-- Experience Sections -->
-    <section class="experience dhl">
-        <div class="company-bg"></div>
-        <div class="content">
-            <h2>DHL Corporate Real State GmbH</h2>
-            <h3>Werkstudent</h3>
-            <p class="location">Stuttgart | 2024-10 - Current</p>
-            <!-- Add your experience details here -->
+    <section id="dhl" class="min-h-screen bg-yellow-500 relative">
+        <div class="container mx-auto px-4 py-16">
+            <h2 class="text-4xl font-bold mb-8">DHL Express</h2>
+            <div class="bg-white rounded-lg p-8 shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4">Software Developer</h3>
+                <p class="text-gray-800">2023 - Present</p>
+                <ul class="list-disc list-inside mt-4 text-gray-800">
+                    <li>Development of a web application for the DHL Express IT department</li>
+                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
+                    <li>Integration of various APIs and services</li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <!-- Add other sections similarly -->
+    <section id="bertrandt" class="min-h-screen bg-blue-500 relative">
+        <div class="container mx-auto px-4 py-16">
+            <h2 class="text-4xl font-bold mb-8">Bertrandt</h2>
+            <div class="bg-white rounded-lg p-8 shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4">Software Developer</h3>
+                <p class="text-gray-800">2022 - 2023</p>
+                <ul class="list-disc list-inside mt-4 text-gray-800">
+                    <li>Development of a web application for the Mercedes-Benz IT department</li>
+                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
+                    <li>Integration of various APIs and services</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <p><i class="fas fa-map-marker-alt"></i> Stuttgart, 70569</p>
-        <p><i class="fas fa-envelope"></i> valadary@gmail.com</p>
-    </footer>
+    <section id="hiwistelle" class="min-h-screen bg-white relative">
+        <div class="container mx-auto px-4 py-16">
+            <h2 class="text-4xl font-bold mb-8 text-black">HiWi Stelle</h2>
+            <div class="bg-gray-100 rounded-lg p-8 shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4 text-black">Research Assistant</h3>
+                <p class="text-gray-800">2021 - 2022</p>
+                <ul class="list-disc list-inside mt-4 text-gray-800">
+                    <li>Research and development of a web application for the University of Stuttgart</li>
+                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
+                    <li>Integration of various APIs and services</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="tehran" class="min-h-screen bg-red-500 relative">
+        <div class="container mx-auto px-4 py-16">
+            <h2 class="text-4xl font-bold mb-8">Tehran</h2>
+            <div class="bg-white rounded-lg p-8 shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4">Software Developer</h3>
+                <p class="text-gray-800">2020 - 2021</p>
+                <ul class="list-disc list-inside mt-4 text-gray-800">
+                    <li>Development of a web application for the Tehran IT department</li>
+                    <li>Implementation of a user interface for managing and monitoring IT systems</li>
+                    <li>Integration of various APIs and services</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <script src="script.js"></script>
-</body>
-</html>
 </body>
 </html>
