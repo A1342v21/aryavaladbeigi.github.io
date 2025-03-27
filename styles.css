@@ -560,3 +560,95 @@ footer {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
 }
+
+/* Adding key new styles, keeping previous styling as base */
+
+.engine-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+}
+
+.engine-container.active {
+    opacity: 1;
+}
+
+/* Company-specific sections */
+.dhl-section {
+    background: linear-gradient(135deg, #ffcc00 0%, #ffed4a 100%);
+    color: #d40511;
+}
+
+.uni-stuttgart-section {
+    background: linear-gradient(135deg, #00589c 0%, #0074d9 100%);
+    color: white;
+}
+
+.bertrandt-section {
+    background: linear-gradient(135deg, #005587 0%, #0074b2 100%);
+    color: white;
+}
+
+/* Transition elements */
+.transition-element {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    transition: all 0.5s ease;
+}
+
+/* Scramble text effect */
+.scramble-text {
+    font-family: monospace;
+    font-size: 3rem;
+    color: #fff;
+}
+
+.dud {
+    opacity: 0.7;
+}
+
+/* Section transitions */
+.experience {
+    position: relative;
+    min-height: 100vh;
+    padding: 5rem 2rem;
+    transition: all 0.5s ease;
+}
+
+.experience.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.brand-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-bg img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+}
