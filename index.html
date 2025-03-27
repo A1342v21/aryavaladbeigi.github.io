@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
 <body>
     <!-- Particle Background -->
@@ -15,6 +16,9 @@
     <!-- Navigation -->
     <nav class="glass-nav">
         <div class="logo">AV</div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#about">Über Mich</a>
@@ -36,6 +40,26 @@
             <div class="location">
                 <i class="fas fa-map-marker-alt"></i> Bochum, Germany
             </div>
+            <div class="scroll-down">
+                <p>Scroll Down</p>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="about">
+        <h2 data-aos="fade-up">
+            <span class="de">Über Mich</span>
+            <span class="en">About Me</span>
+        </h2>
+        <div class="about-content" data-aos="fade-up">
+            <p class="de">
+                Kommunikativ, freundlich und in der Lage, sich auf jede Situation einzustellen. Zielgerichtet und fleißig, mit hohem Engagement, bereit die Extra-Meile zu gehen. Ich habe mich immer durch meine Produktivität und meine Fähigkeit, schnell zu lernen, ausgezeichnet. Zu meinen Kompetenzen gehören Veränderungsbereitschaft, Kreativität, Unternehmerisches Denken und Kritikfähigkeit.
+            </p>
+            <p class="en">
+                Communicative, friendly, and adaptable to any situation. Goal-oriented and diligent, with high commitment and willingness to go the extra mile. I have always distinguished myself through my productivity and ability to learn quickly. My competencies include openness to change, creativity, entrepreneurial thinking, and the ability to accept criticism.
+            </p>
         </div>
     </section>
 
@@ -46,60 +70,131 @@
             <span class="en">Professional Experience</span>
         </h2>
         
-        <!-- DHL Experience -->
-        <div class="exp-card" data-aos="fade-up">
-            <div class="exp-header">
-                <h3>DHL Corporate Real State GmbH</h3>
-                <p>Stuttgart | 2024-10 - Current</p>
+        <!-- 3D Carousel for Experience -->
+        <div class="scene">
+            <div class="carousel">
+                <!-- DHL Experience -->
+                <div class="carousel__cell" data-id="1">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <h3>DHL Corporate Real State GmbH</h3>
+                            <p>Stuttgart | 2024-10 - Current</p>
+                        </div>
+                        <h4>Werkstudent</h4>
+                        <ul>
+                            <li>Dokumentation und Datenerfassung: Zusammenführung und Strukturierung verschiedener Dokumente zu DHL-Stationen und Gebäuden in einer zentralen Datenbank.</li>
+                            <li>Cloud-Archivierung: Organisation und Archivierung relevanter Dokumente in der Cloud-Plattform Archibus, um eine langfristige und effiziente Datenverwaltung sicherzustellen.</li>
+                            <li>Interne Kommunikation: Regelmäßige Abstimmung und Zusammenarbeit mit Teammitgliedern, um Projekte erfolgreich umzusetzen.</li>
+                            <li>Prozessoptimierung: Unterstützung bei der Weiterentwicklung von Dokumentationsstandards und Prozessen zur Verbesserung der Datenqualität und Nachverfolgbarkeit.</li>
+                            <li>Einarbeitung in Archibus und andere Software-Tools zur professionellen Verwaltung von Immobilien- und Facility-Management-Daten.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ITM Institut Experience -->
+                <div class="carousel__cell" data-id="2">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <h3>ITM Institut Universität Stuttgart</h3>
+                            <p>Stuttgart | 2024-04 - 2024-10</p>
+                        </div>
+                        <h4>Hiwi Stelle</h4>
+                        <ul>
+                            <li>Roboter in Matlab und Simulink simulieren+ Bewegungen mit Denavit-Hartenberg convention.</li>
+                            <li>Inverse- und Vorwärtskinematik vorhersagen und die Beschleunigung des Roboters passend in dem Code einfügen.</li>
+                            <li>Schneller Austausch von relevanten Informationen.</li>
+                            <li>Professionelles Zusammenarbeiten mit anderen Abteilungen.</li>
+                            <li>Betreuer: Herr Manuel Sänger</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bertrandt Experience -->
+                <div class="carousel__cell" data-id="3">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <h3>Bertrandt AG</h3>
+                            <p>Ehningen | 2024-04 - 2024-07</p>
+                        </div>
+                        <h4>Praktikum(Projektmanagement)</h4>
+                        <ul>
+                            <li>Projekt "ADAS": Mitarbeit im Bereich Autonomous Driving, Entwicklung und Implementierung autonomer Fahrzeugtechnologien (Gen5 & Gen6).</li>
+                            <li>Marktanalyse und Softwareevaluation: Durchführung einer umfangreichen Marktrecherche zur Identifikationseiner geeigneten Projektmanagement-App.</li>
+                            <li>Testkoordination: Durchführung und Dokumentation von Tests zur Gesichtserkennung und Kamerafunktion für Mercedes-Benz, einschließlich der Evaluierung automatisierter Parksysteme.</li>
+                            <li>Datenmanagement mit SQL für Softwaretest-Szenarien: Erstellung und Validierung umfassender Tabellen/Integrität durch sorgfältige Prüfung und Validierung.</li>
+                            <li>Schnelles und genaues Erledigen der Aufgaben sowie vorausschauendes und präzises Planen für kommende Projekte.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FKFS Experience -->
+                <div class="carousel__cell" data-id="4">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <h3>FKFS Institut + ITM Institut</h3>
+                            <p>Stuttgart | 2023-04 - 2023-10</p>
+                        </div>
+                        <h4>Studentische Hilfskraft</h4>
+                        <ul>
+                            <li>Unterstützung bei der Durchführung einzigartiger Versuche im Stuttgarter Fahrsimulator zur Bewertung des Verletzungsrisikos beim autonomen Fahren.</li>
+                            <li>Synthetisierung des Opferschwingverhalten und der CRG-Messungen, sowie Aufbau und Abbau des Systems.</li>
+                            <li>Entwurf einer Dynamik-Vorsteuerung für einen Industrieroboter mittels Matlab/Simulink.</li>
+                            <li>Zuständig für Messungen zur Belastung der Nackenmuskulatur im Fahrsimulator, Zusammenarbeit mit einem interdisziplinären Team und Unterstützung bei Forschungsprojekten.</li>
+                            <li>Datensammlung und Datenbewertung von Probanden/Dokumentieren und Archivieren von Forschungsdaten.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Navid Experience -->
+                <div class="carousel__cell" data-id="5">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <h3>Bauunternehmen Navid</h3>
+                            <p>Tehran | 2020-09 - 2021-10</p>
+                        </div>
+                        <h4>Junior-Projektmanager / -Ingenieur</h4>
+                        <ul>
+                            <li>Wasser- und Gasrohrleitungen in Bauwerken (Alt-und Neubauprojekten).</li>
+                            <li>Praktische Erfahrung mit Aufzugsanlagen in Wohngebäuden sowie Motoren (ZIEHL-ABEGG) und Steuerungssystemen, dementsprechend Nachhaltigkeit und energieeffiziente Funktionen in Wohngebäuden.</li>
+                            <li>Eigenständiges Leiten von Projekten.</li>
+                            <li>Überwachen und Verwalten des Projektbudgets.</li>
+                            <li>Professionelle Kommunikation mit Kunden und Stakeholdern.</li>
+                            <li>Motivieren und Führen eines Teams mit 12 Personen.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Rahmanparsa Experience -->
+                <div class="carousel__cell" data-id="6">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <h3>Rahmanparsa Unternehmen</h3>
+                            <p>Tehran | 2020-04 - 2020-09</p>
+                        </div>
+                        <h4>Praktikum(freiwillig)</h4>
+                        <ul>
+                            <li>Druckmessgeräte, Manometer, Differenz-und Absolutdruckmessgeräte, Drucktransmitter usw.) sowie Motoren und Antriebe von ABB kennengelernt; in Energie- und Automatisierungstechnikkonzern.</li>
+                            <li>Datenerfassung und Datensammlung von Druckmessgeräte/Zusammenarbeit mit Kollegen und Vorgesetzten.</li>
+                            <li>Professionelles Zusammenarbeiten mit anderen Abteilungen.</li>
+                            <li>Administration und Zusammenarbeit mit den Energie erzeugenden Fabriken, Business-Seite sowie Bedarfserkennung, Vertragsabschluss kennengelernt.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <h4>Werkstudent</h4>
-            <ul>
-                <li>Cloud-Archivierung in Archibus</li>
-                <li>Dokumentation und Datenerfassung</li>
-                <li>Prozessoptimierung</li>
-            </ul>
         </div>
 
-        <!-- ITM Institut Experience -->
-        <div class="exp-card" data-aos="fade-up">
-            <div class="exp-header">
-                <h3>ITM Institut Universität Stuttgart</h3>
-                <p>Stuttgart | 2024-04 - 2024-10</p>
+        <!-- Navigation Controls for Carousel -->
+        <div class="carousel-nav">
+            <button class="prev-button"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel-dots">
+                <span class="dot active" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+                <span class="dot" data-index="5"></span>
+                <span class="dot" data-index="6"></span>
             </div>
-            <h4>Hiwi Stelle</h4>
-            <ul>
-                <li>Roboter in Matlab und Simulink simulieren</li>
-                <li>Bewegungen mit Denavit-Hartenberg convention</li>
-                <li>Professionelles Zusammenarbeiten mit anderen Abteilungen</li>
-            </ul>
-        </div>
-
-        <!-- FKFS Experience -->
-        <div class="exp-card" data-aos="fade-up">
-            <div class="exp-header">
-                <h3>FKFS Institut + ITM Institut</h3>
-                <p>Stuttgart | 2023-04 - 2023-10</p>
-            </div>
-            <h4>Studentische Hilfskraft</h4>
-            <ul>
-                <li>Unterstützung bei Fahrsimulator-Versuchen</li>
-                <li>Entwicklung von Dynamik-Vorsteuerung für Industrieroboter</li>
-                <li>Datensammlung und Bewertung von Forschungsdaten</li>
-            </ul>
-        </div>
-
-        <!-- Navid Experience -->
-        <div class="exp-card" data-aos="fade-up">
-            <div class="exp-header">
-                <h3>Bauunternehmen Navid</h3>
-                <p>Tehran | 2020-09 - 2021-10</p>
-            </div>
-            <h4>Junior-Projektmanager / -Ingenieur</h4>
-            <ul>
-                <li>Wasser- und Gasrohreitungen in Bauwerken</li>
-                <li>Projektleitung und Teamführung</li>
-                <li>Management von 12-köpfigem Team</li>
-            </ul>
+            <button class="next-button"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
 
@@ -110,20 +205,82 @@
             <span class="en">Education</span>
         </h2>
         
-        <div class="edu-card" data-aos="fade-up">
-            <div class="edu-header">
-                <h3>Universität Stuttgart</h3>
-                <p>2022-10 - Current</p>
+        <div class="swiper-container" data-aos="fade-up">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="edu-card">
+                        <div class="edu-header">
+                            <h3>Universität Stuttgart</h3>
+                            <p>2022-10 - Current</p>
+                        </div>
+                        <h4>Master of Science: Maschinenbau(allgemein)</h4>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="edu-card">
+                        <div class="edu-header">
+                            <h3>Universität Stuttgart</h3>
+                            <p>2015-09 - 2020-09</p>
+                        </div>
+                        <h4>Bachelor of Science: Maschinenbau</h4>
+                    </div>
+                </div>
             </div>
-            <h4>Master of Science: Maschinenbau(allgemein)</h4>
+            <div class="swiper-pagination"></div>
         </div>
+    </section>
 
-        <div class="edu-card" data-aos="fade-up">
-            <div class="edu-header">
-                <h3>Universität Stuttgart</h3>
-                <p>2015-09 - 2020-09</p>
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <h2 data-aos="fade-up">
+            <span class="de">Fähigkeiten</span>
+            <span class="en">Skills</span>
+        </h2>
+        
+        <div class="skills-grid" data-aos="fade-up">
+            <div class="skill-card">
+                <i class="fas fa-project-diagram"></i>
+                <h3>Projektmanagement</h3>
+                <ul>
+                    <li>APC (Advanced Process Control)</li>
+                    <li>KPI Management</li>
+                    <li>SPC (Statistical Process Control)</li>
+                    <li>TQM (Total Quality Management)</li>
+                </ul>
             </div>
-            <h4>Bachelor of Science: Maschinenbau</h4>
+            
+            <div class="skill-card">
+                <i class="fas fa-robot"></i>
+                <h3>Robotik & Automation</h3>
+                <ul>
+                    <li>MATLAB & Simulink</li>
+                    <li>Denavit-Hartenberg Convention</li>
+                    <li>Kinematik-Simulation</li>
+                    <li>Industrieroboter</li>
+                </ul>
+            </div>
+            
+            <div class="skill-card">
+                <i class="fas fa-car"></i>
+                <h3>Autonome Systeme</h3>
+                <ul>
+                    <li>ADAS (Advanced Driver Assistance Systems)</li>
+                    <li>Gesichtserkennung</li>
+                    <li>Automatisierte Parksysteme</li>
+                    <li>Fahrzeugtechnologien</li>
+                </ul>
+            </div>
+            
+            <div class="skill-card">
+                <i class="fas fa-cloud"></i>
+                <h3>Dokumentation & Datenmanagement</h3>
+                <ul>
+                    <li>Archibus</li>
+                    <li>Cloud-Plattformen</li>
+                    <li>SQL</li>
+                    <li>Datenvalidierung</li>
+                </ul>
+            </div>
         </div>
     </section>
 
@@ -138,8 +295,13 @@
         </div>
     </section>
 
+    <footer>
+        <p>&copy; 2024 Arya Valadbeigi</p>
+    </footer>
+
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
