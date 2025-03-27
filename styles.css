@@ -468,3 +468,95 @@ footer {
     }
 
     .skills-
+
+    /* Responsive Design (continued) */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .scene {
+        height: 600px;
+    }
+
+    .exp-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Animation keyframes for 3D effects */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    }
+}
+
+/* 3D Rotation effects for carousel */
+.carousel[data-position="1"] { transform: translateZ(-288px) rotateY(0deg); }
+.carousel[data-position="2"] { transform: translateZ(-288px) rotateY(-60deg); }
+.carousel[data-position="3"] { transform: translateZ(-288px) rotateY(-120deg); }
+.carousel[data-position="4"] { transform: translateZ(-288px) rotateY(-180deg); }
+.carousel[data-position="5"] { transform: translateZ(-288px) rotateY(-240deg); }
+.carousel[data-position="6"] { transform: translateZ(-288px) rotateY(-300deg); }
+
+/* Position each cell at the right angle */
+.carousel__cell:nth-child(1) { transform: rotateY(0deg) translateZ(288px); }
+.carousel__cell:nth-child(2) { transform: rotateY(60deg) translateZ(288px); }
+.carousel__cell:nth-child(3) { transform: rotateY(120deg) translateZ(288px); }
+.carousel__cell:nth-child(4) { transform: rotateY(180deg) translateZ(288px); }
+.carousel__cell:nth-child(5) { transform: rotateY(240deg) translateZ(288px); }
+.carousel__cell:nth-child(6) { transform: rotateY(300deg) translateZ(288px); }
+
+/* Additional Animation Classes */
+.slide-up {
+    animation: slideUp 1s ease forwards;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Zoom effect for cards */
+.zoom-on-hover:hover {
+    transform: scale(1.05);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
