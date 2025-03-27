@@ -1,83 +1,47 @@
 <!DOCTYPE html>
 <html lang="de">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arya Valadbeigi - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Engine Animation Container -->
-    <div class="engine-container">
-        <canvas id="engineCanvas"></canvas>
-    </div>
-
-    <!-- Hero Section with Scrambled Text -->
-    <section class="hero" id="hero">
-        <div class="scramble-text" data-text="Arya Valadbeigi">Arya Valadbeigi</div>
-        <div class="engine-scroll-indicator">
-            <span>Scroll to Start Engine</span>
-            <div class="scroll-arrow"></div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="engine-animation">
+            <div class="piston"></div>
         </div>
-    </section>
-
-    <!-- About Section with Blockchain Animation -->
-    <section class="about" id="about">
-        <div class="blockchain-bg"></div>
-        <div class="scramble-container">
-            <!-- Words will be dynamically added here -->
+        <h1 class="main-title">Arya Valadbeigi</h1>
+        <p class="subtitle">Maschinenbau • Projektmanagement • Autonomes Fahren</p>
+        <div class="scroll-indicator">
+            <span>Scroll to Start Engine</span>
+            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
     <!-- Experience Sections -->
-    <section class="experience dhl-section" id="dhl">
-        <div class="brand-bg">
-            <img src="assets/dhl-logo.svg" alt="DHL">
-        </div>
-        <div class="content-wrapper">
+    <section class="experience dhl">
+        <div class="company-bg"></div>
+        <div class="content">
             <h2>DHL Corporate Real State GmbH</h2>
-            <div class="position">Werkstudent</div>
-            <div class="location">Stuttgart | 2024-10 - Current</div>
-            <!-- Experience content -->
+            <h3>Werkstudent</h3>
+            <p class="location">Stuttgart | 2024-10 - Current</p>
+            <!-- Add your experience details here -->
         </div>
-        <div class="transition-element post-box"></div>
     </section>
 
-    <section class="experience uni-stuttgart-section" id="hiwi">
-        <div class="brand-bg">
-            <img src="assets/uni-stuttgart-logo.svg" alt="Universität Stuttgart">
-        </div>
-        <div class="content-wrapper">
-            <!-- ITM Institut content -->
-        </div>
-        <div class="transition-element robot-arm"></div>
-    </section>
-
-    <section class="experience bertrandt-section" id="bertrandt">
-        <div class="brand-bg">
-            <img src="assets/bertrandt-logo.svg" alt="Bertrandt AG">
-        </div>
-        <div class="content-wrapper">
-            <!-- Bertrandt content -->
-        </div>
-        <div class="transition-element engine-model"></div>
-    </section>
-
-    <!-- Continue with other sections... -->
+    <!-- Add other sections similarly -->
 
     <footer>
-        <div class="contact-info">
-            <p><i class="fas fa-map-marker-alt"></i> Stuttgart, 70569</p>
-            <p><i class="fas fa-envelope"></i> valadary@gmail.com</p>
-        </div>
+        <p><i class="fas fa-map-marker-alt"></i> Stuttgart, 70569</p>
+        <p><i class="fas fa-envelope"></i> valadary@gmail.com</p>
     </footer>
 
-    <script src="engine-animation.js"></script>
     <script src="script.js"></script>
+</body>
+</html>
 </body>
 </html>
