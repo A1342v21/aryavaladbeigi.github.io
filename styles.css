@@ -1,131 +1,88 @@
-:root {
-    --dhl-yellow: #ffcc00;
-    --dhl-red: #d40511;
-    --bg-dark: #0f172a;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: var(--bg-dark);
-    color: white;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* Hero Section */
-.hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
-}
-
-.main-title {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.subtitle {
-    font-size: 1.5rem;
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-/* Engine Animation */
-.engine-animation {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
-    opacity: 0.3;
-}
-
-.piston {
-    width: 60px;
-    height: 100px;
-    background: #444;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
-}
-
-/* Experience Sections */
-.experience {
-    min-height: 100vh;
-    padding: 4rem 2rem;
+/* Cylinder Animation */
+.cylinder-body {
+    width: 100%;
+    height: 80%;
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    border-radius: 20px;
     position: relative;
     overflow: hidden;
 }
 
-.dhl {
-    background: var(--dhl-yellow);
-    color: var(--dhl-red);
+.cylinder-piston {
+    width: 60%;
+    height: 20%;
+    background: #e74c3c;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    animation: piston-move 2s infinite;
 }
 
-.company-bg {
+@keyframes piston-move {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+}
+
+/* Scattered Text Animation */
+#scattered-text span {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.1;
-    background-size: contain;
-    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* Section Transitions */
+section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Background Images */
+#dhl {
+    background-image: url('https://www.dhl.com/content/dam/dhl/global/core/images/logos/dhl-logo.svg');
+    background-size: cover;
     background-position: center;
 }
 
-.dhl .company-bg {
-    background-image: url('assets/dhl-logo.svg');
+#bertrandt {
+    background-image: url('https://www.bertrandt.com/fileadmin/bertrandt/media/logo/bertrandt-logo.svg');
+    background-size: cover;
+    background-position: center;
 }
 
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+#hiwistelle {
+    background-image: url('https://www.uni-stuttgart.de/assets/logo.svg');
+    background-size: cover;
+    background-position: center;
 }
 
-/* Scroll Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    animation: bounce 2s infinite;
+#tehran {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/ca/Flag_of_Iran.svg');
+    background-size: cover;
+    background-position: center;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-20px);
-    }
-    60% {
-        transform: translateY(-10px);
-    }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-/* Footer */
-footer {
-    padding: 2rem;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.8);
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
