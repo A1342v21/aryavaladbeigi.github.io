@@ -329,10 +329,10 @@ h4 {
     color: var(--accent-color);
 }
 
-p, li {
-    font-size: var(--font-size-normal);
-    line-height: 1.8;
-    margin-bottom: 0.8rem;
+p, li, .about-text, .timeline-content {
+    max-width: 12ch; /* Change from 25ch to 12ch to make lines about half as long */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ADD THIS NEW SECTION HERE */
