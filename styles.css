@@ -329,13 +329,6 @@ h4 {
     color: var(--accent-color);
 }
 
-p, li, .about-text, .timeline-content {
-    max-width: 12ch; /* Change from 25ch to 12ch to make lines about half as long */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ADD THIS NEW SECTION HERE */
 /* Text width limiters for shorter sentences */
 p, li, .about-text, .timeline-content {
     max-width: 25ch; /* Limits text to approximately 25 characters per line */
@@ -343,24 +336,18 @@ p, li, .about-text, .timeline-content {
     margin-right: auto;
 }
 
+/* ADD THIS RIGHT HERE */
+/* Add this to target the about-text section specifically */
+.about-text p {
+    max-width: 12ch;
+    text-align: left; /* Makes the wrapping more natural */
+}
+/* END OF ADDITION */
+
 /* Improve readability with larger text */
 p, li {
     line-height: 1.4;
     margin-bottom: 1.5rem;
-}
-
-/* Increase content padding */
-.timeline-content {
-    padding: 40px; /* Increase from 30px */
-}
-
-/* More spacing between sections */
-section {
-    padding: 8rem 0;
-}
-/* END OF NEW SECTION */
-
-/* Add 1cm spacing on left and right */
 }
 
 /* Enhanced hero section */
