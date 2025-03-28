@@ -9,7 +9,10 @@
     --background-color: #f5f5f5; /* Light grey */
     --card-background: #fff;
     --transition-speed: 0.3s;
-    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    --perspective: 1000px;
+    --gradient-bg: linear-gradient(135deg, #1a237e 0%, #283593 50%, #303f9f 100%);
     
     /* Company colors */
     --dhl-color: #fc0;
@@ -30,6 +33,9 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    height: 100%;
+    perspective: var(--perspective);
+    overflow-x: hidden;
 }
 
 body {
@@ -39,6 +45,8 @@ body {
     background-color: var(--background-color);
     overflow-x: hidden;
     font-weight: 300;
+    min-height: 100%;
+    background: radial-gradient(circle at center, #f5f5f5, #eceff1);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -66,6 +74,12 @@ ul {
     list-style: none;
 }
 
+/* 3D Scene Perspective */
+.perspective-container {
+    perspective: var(--perspective);
+    transform-style: preserve-3d;
+}
+
 /* Custom Cursor */
 .cursor-follower {
     position: fixed;
@@ -78,6 +92,8 @@ ul {
     z-index: 9999;
     transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
     display: none;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 20px rgba(26, 35, 126, 0.3);
 }
 
 @media (min-width: 768px) {
@@ -93,9 +109,11 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.85);
     box-shadow: var(--box-shadow);
     transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 header.hidden {
@@ -117,6 +135,13 @@ nav {
     color: var(--secondary-color);
     position: relative;
     font-family: 'Poppins', sans-serif;
+    text-shadow: var(--text-shadow);
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+.logo:hover {
+    transform: translateZ(20px) rotateY(10deg);
 }
 
 .logo::after {
@@ -145,6 +170,14 @@ nav {
     padding: 0.5rem 0;
     font-size: 1.05rem;
     letter-spacing: 0.02em;
+    transition: transform 0.3s ease, color 0.3s ease;
+    transform-style: preserve-3d;
+    display: inline-block;
+}
+
+.nav-links li a:hover {
+    transform: translateZ(10px);
+    color: var(--secondary-color);
 }
 
 .nav-links li a::after {
@@ -173,11 +206,14 @@ nav {
     transition: all 0.3s ease;
     font-weight: 500;
     letter-spacing: 0.02em;
+    box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+    transform-style: preserve-3d;
 }
 
 .github-link a:hover {
     background-color: var(--accent-color);
-    transform: translateY(-2px);
+    transform: translateY(-3px) translateZ(10px);
+    box-shadow: 0 8px 20px rgba(26, 35, 126, 0.4);
 }
 
 /* Hero Section */
@@ -190,15 +226,31 @@ nav {
     text-align: center;
     padding: 0 1rem;
     position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
     background: linear-gradient(135deg, var(--light-color) 0%, #fff 100%);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 30%, rgba(26, 35, 126, 0.03) 70%);
+    z-index: -1;
 }
 
 .hero-content {
     max-width: 800px;
+    z-index: 2;
+    transform-style: preserve-3d;
 }
 
 .hero h1 {
-    font-size: 4.5rem;
+    font-size: 5rem;
     margin-bottom: 1.5rem;
     background: linear-gradient(45deg, var(--dark-color), var(--secondary-color));
     -webkit-background-clip: text;
@@ -206,23 +258,72 @@ nav {
     color: transparent;
     letter-spacing: -0.03em;
     line-height: 1.1;
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    transform-style: preserve-3d;
+    transform: translateZ(50px);
 }
 
 .tagline {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 1.8rem;
     font-weight: 300;
+    transform: translateZ(30px);
 }
 
 .highlight {
     color: var(--secondary-color);
     font-weight: 700;
+    position: relative;
+    display: inline-block;
+    transform-style: preserve-3d;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: rgba(26, 35, 126, 0.2);
+    border-radius: 3px;
+    transform: translateZ(-2px);
 }
 
 .email a {
     color: var(--accent-color);
     font-weight: 500;
     font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transform: translateZ(20px);
+}
+
+.email a:hover {
+    background-color: white;
+    transform: translateZ(30px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transform-style: preserve-3d;
+}
+
+.hero-shape {
+    position: absolute;
+    background-color: rgba(26, 35, 126, 0.03);
+    border-radius: 50%;
+    transform: translateZ(-100px);
 }
 
 .scroll-indicator {
@@ -233,28 +334,47 @@ nav {
     align-items: center;
     gap: 0.5rem;
     animation: bounce 2s infinite;
+    transform: translateZ(10px);
+    z-index: 2;
+}
+
+.scroll-indicator span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+}
+
+.scroll-indicator i {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
 }
 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
+        transform: translateY(0) translateZ(10px);
     }
     40% {
-        transform: translateY(-20px);
+        transform: translateY(-20px) translateZ(10px);
     }
     60% {
-        transform: translateY(-10px);
+        transform: translateY(-10px) translateZ(10px);
     }
 }
 
 /* Section Styles */
 section {
     padding: 8rem 1rem;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
 }
 
 .section-header {
     text-align: center;
     margin-bottom: 4rem;
+    transform-style: preserve-3d;
 }
 
 .section-header h2 {
@@ -262,6 +382,8 @@ section {
     display: inline-block;
     position: relative;
     color: var(--dark-color);
+    text-shadow: var(--text-shadow);
+    transform: translateZ(20px);
 }
 
 .section-header h2::after {
@@ -278,6 +400,18 @@ section {
 /* About Section */
 .about {
     background-color: var(--light-color);
+    position: relative;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 35, 126, 0.03), transparent);
+    z-index: 0;
 }
 
 .about-content {
@@ -286,56 +420,107 @@ section {
     display: flex;
     flex-direction: column;
     gap: 3.5rem;
+    position: relative;
+    z-index: 1;
+    transform-style: preserve-3d;
 }
 
 .personality-traits {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2rem;
+    transform-style: preserve-3d;
 }
 
 .trait-card {
     background-color: var(--card-background);
-    padding: 2rem;
-    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
     box-shadow: var(--box-shadow);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+    transform: translateZ(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.trait-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    transform: translateZ(5px);
 }
 
 .trait-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px) translateZ(30px) rotateX(5deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .trait-card i {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: var(--secondary-color);
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+    transform: translateZ(20px);
+}
+
+.trait-card:hover i {
+    transform: translateZ(40px) scale(1.1);
 }
 
 .trait-card h3 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     letter-spacing: 0.01em;
+    transform: translateZ(15px);
+    margin-bottom: 0.8rem;
+}
+
+.trait-card p {
+    transform: translateZ(10px);
+    font-size: 1rem;
+    color: var(--accent-color);
+    opacity: 0;
+    max-height: 0;
+    transition: all 0.5s ease;
+}
+
+.trait-card:hover p {
+    opacity: 1;
+    max-height: 100px;
+    margin-top: 1rem;
 }
 
 .about-text {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     line-height: 1.9;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    box-shadow: var(--box-shadow);
+    backdrop-filter: blur(5px);
+    transform: translateZ(20px);
 }
 
-/* Experience Section */
+/* Experience Section (keep most of your existing timeline styles) */
 .experience {
     background-color: var(--card-background);
+    transform-style: preserve-3d;
 }
 
 .timeline {
     max-width: 1000px;
     margin: 0 auto;
     position: relative;
+    transform-style: preserve-3d;
 }
 
 .timeline::before {
@@ -346,25 +531,29 @@ section {
     transform: translateX(-50%);
     width: 4px;
     height: 100%;
-    background-color: var(--accent-color);
+    background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+    transform-style: preserve-3d;
+    box-shadow: 0 0 20px rgba(26, 35, 126, 0.3);
 }
 
 .timeline-item {
     margin-bottom: 6rem;
     position: relative;
     width: 100%;
-    perspective: 1000px;
+    perspective: 1200px;
+    transform-style: preserve-3d;
 }
 
 .timeline-content {
     position: relative;
     width: calc(50% - 40px);
-    padding: 2rem;
-    border-radius: 12px;
+    padding: 2.5rem;
+    border-radius: 16px;
     background-color: var(--card-background);
     box-shadow: var(--box-shadow);
     transform-style: preserve-3d;
-    transition: transform 0.5s ease;
+    transition: all 0.5s ease;
+    backface-visibility: hidden;
 }
 
 .timeline-item:nth-child(odd) .timeline-content {
@@ -378,31 +567,38 @@ section {
 }
 
 .timeline-item:hover .timeline-content {
-    transform: rotateY(5deg);
+    transform: rotateY(10deg) translateZ(20px);
+    box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-item:nth-child(even):hover .timeline-content {
+    transform: rotateY(-10deg) translateZ(20px);
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-content::before {
     content: '';
     position: absolute;
     top: 20px;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+    transition: all 0.5s ease;
 }
 
 .timeline-item:nth-child(odd) .timeline-content::before {
-    left: -10px;
+    left: -15px;
     transform: translateX(-100%);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid var(--card-background);
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 15px solid var(--card-background);
 }
 
 .timeline-item:nth-child(even) .timeline-content::before {
-    right: -10px;
+    right: -15px;
     transform: translateX(100%);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid var(--card-background);
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid var(--card-background);
 }
 
 .timeline-item::after {
@@ -411,69 +607,58 @@ section {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     z-index: 1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
 }
 
-/* Company-specific timeline decorations */
-.timeline-item[data-company="dhl"]::after {
-    background-color: var(--dhl-color);
+.timeline-item:hover::after {
+    transform: translateX(-50%) scale(1.3);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
 }
 
-.timeline-item[data-company="bertrandt"]::after {
-    background-color: var(--bertrandt-color);
-}
-
-.timeline-item[data-company="itm"]::after {
-    background-color: var(--itm-color);
-}
-
-.timeline-item[data-company="fkfs"]::after {
-    background-color: var(--fkfs-color);
-}
-
-.timeline-item[data-company="navid"]::after {
-    background-color: var(--navid-color);
-}
-
-.timeline-item[data-company="bahman"]::after {
-    background-color: var(--bahman-color);
-}
+/* Keep your company-specific colors */
 
 .date {
     display: inline-block;
-    padding: 0.6rem 1.2rem;
+    padding: 0.8rem 1.5rem;
     background-color: var(--secondary-color);
     color: #fff;
-    border-radius: 4px;
+    border-radius: 8px;
     font-weight: 500;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     font-size: 1.1rem;
     letter-spacing: 0.02em;
+    transform: translateZ(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-content h3 {
-    font-size: 1.8rem;
-    margin-bottom: 0.7rem;
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
     color: var(--dark-color);
+    transform: translateZ(20px);
 }
 
 .timeline-content h4 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     color: var(--accent-color);
     margin-bottom: 1.5rem;
     font-weight: 500;
+    transform: translateZ(15px);
 }
 
 .timeline-content ul {
     margin: 1.5rem 0;
     padding-left: 1.5rem;
+    transform: translateZ(5px);
 }
 
 .timeline-content ul li {
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.8rem;
     position: relative;
     list-style-type: disc;
     font-size: 1.05rem;
@@ -484,312 +669,111 @@ section {
     font-style: italic;
     color: var(--accent-color);
     margin-top: 1.5rem;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    transform: translateZ(5px);
 }
 
 /* Education Section */
 .education {
     background-color: var(--light-color);
+    transform-style: preserve-3d;
 }
 
 .education-timeline {
     max-width: 800px;
     margin: 0 auto;
+    transform-style: preserve-3d;
 }
 
 .education-item {
-    padding: 2.5rem;
+    padding: 3rem;
     background-color: var(--card-background);
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: var(--box-shadow);
-    margin-bottom: 2.5rem;
-    transition: transform 0.3s ease;
+    margin-bottom: 3rem;
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+    transform: translateZ(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.education-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
 }
 
 .education-item:hover {
-    transform: scale(1.02);
+    transform: translateY(-10px) translateZ(30px) rotateX(5deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .education-content h3 {
     font-size: 1.8rem;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.8rem;
     color: var(--dark-color);
+    transform: translateZ(20px);
 }
 
 .education-content h4 {
     color: var(--accent-color);
     margin-bottom: 1.2rem;
     font-size: 1.25rem;
+    transform: translateZ(15px);
 }
 
-/* Keep the rest of the CSS the same except for these selectors */
-/* Footer */
-footer {
-    background-color: var(--dark-color);
-    color: #fff;
-    padding: 3.5rem 1rem;
-}
-
-/* Keep company-specific colors */
-.timeline-item[data-company="dhl"] .date {
-    background-color: var(--dhl-color);
-    color: var(--dark-color);
-}
-
-.timeline-item[data-company="bertrandt"] .date {
-    background-color: var(--bertrandt-color);
-}
-
-.timeline-item[data-company="itm"] .date {
-    background-color: var(--itm-color);
-}
-
-.timeline-item[data-company="fkfs"] .date {
-    background-color: var(--fkfs-color);
-}
-
-.timeline-item[data-company="navid"] .date {
-    background-color: var(--navid-color);
-}
-
-.timeline-item[data-company="bahman"] .date {
-    background-color: var(--bahman-color);
-}
-
-/* Contact Section */
-.contact {
-    background-color: var(--card-background);
-}
-
-.contact-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3.5rem;
-}
-
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-}
-
-.contact-item i {
-    font-size: 1.8rem;
-    color: var(--secondary-color);
-}
-
-.contact-item p {
-    font-size: 1.1rem;
-}
-
-.contact-form {
-    background-color: var(--light-color);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: var(--box-shadow);
-}
-
-.form-group {
-    margin-bottom: 1.8rem;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 1.2rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: 'Roboto', sans-serif;
-    transition: border 0.3s ease;
-    font-size: 1rem;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: var(--secondary-color);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
-}
-
-.form-group textarea {
-    min-height: 180px;
-    resize: vertical;
-}
-
-.btn-submit {
-    background-color: var(--secondary-color);
-    color: #fff;
-    border: none;
-    padding: 1.2rem 2.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-size: 1.1rem;
-    letter-spacing: 0.02em;
-    font-family: 'Poppins', sans-serif;
-}
-
-.btn-submit:hover {
-    background-color: var(--accent-color);
-    transform: translateY(-3px);
-}
-
-/* Footer */
-footer {
-    background-color: var(--dark-color);
-    color: #fff;
-    padding: 4rem 1rem;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.footer-logo {
-    font-size: 2.5rem;
-    font-weight: 700;
-    font-family: 'Poppins', sans-serif;
-}
-
-.footer-content p {
-    font-size: 1.05rem;
-    opacity: 0.9;
-}
-
-.social-links {
-    display: flex;
-    gap: 2rem;
-}
-
-.social-links a {
-    font-size: 1.7rem;
-    transition: transform 0.3s ease, color 0.3s ease;
-    opacity: 0.9;
-}
-
-.social-links a:hover {
-    transform: translateY(-5px);
-    color: var(--secondary-color);
-    opacity: 1;
-}
-
-/* Success message styling */
-.success-message {
-    text-align: center;
-    padding: 2rem;
-}
-
-.success-message i {
-    font-size: 3rem;
-    color: var(--secondary-color);
-    margin-bottom: 1rem;
-}
-
-.success-message h3 {
-    font-size: 1.8rem;
-    margin-bottom: 0.8rem;
-    color: var(--dark-color);
-}
-
-.success-message p {
-    font-size: 1.1rem;
-}
-
-/* Enhanced Animation Classes */
-.animate-fade-in-stagger {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-/* Timeline transition element styling */
-.timeline-transition {
-    position: relative;
-}
-
-.timeline-transition::before {
-    content: '';
+.education-content .date {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-    width: 15px;
-    height: 15px;
-    background-color: var(--secondary-color);
-    border-radius: 2px;
-    z-index: 1;
+    top: 1.5rem;
+    right: 1.5rem;
+    transform: translateZ(10px);
 }
 
-/* Enhance the particle styling */
+/* Keep your existing contact styles but add 3D effects */
+
+/* Add 3D effects to particles */
+.particles-container {
+    transform-style: preserve-3d;
+}
+
 .particle {
-    border-radius: 50%;
-    position: absolute;
-    pointer-events: none;
+    transform-style: preserve-3d;
 }
 
-/* Mobile Navigation Toggle */
-.mobile-nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    z-index: 1001;
+/* Add these 3D effects for animations */
+@keyframes floatIn {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) translateZ(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
+    }
 }
 
-@media (max-width: 768px) {
-    .mobile-nav-toggle {
-        display: block;
+@keyframes rotateIn {
+    0% {
+        opacity: 0;
+        transform: rotateY(-90deg) translateZ(-100px);
     }
-    
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 250px;
-        height: 100vh;
-        background-color: var(--light-color);
-        flex-direction: column;
-        padding: 5rem 2rem;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        z-index: 1000;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    100% {
+        opacity: 1;
+        transform: rotateY(0) translateZ(0);
     }
-    
-    .nav-links.active {
-        transform: translateX(0);
-    }
-    
-    .hero h1 {
-        font-size: 2.8rem;
-    }
-    
-    .contact-content {
-        grid-template-columns: 1fr;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        gap: 1.5rem;
-        text-align: center;
-    }
-    
-    section {
-        padding: 5rem 1rem;
-    }
+}
+
+.float-in {
+    animation: floatIn 1s forwards;
+}
+
+.rotate-in {
+    animation: rotateIn 1s forwards;
 }
