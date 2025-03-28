@@ -1,7 +1,13 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the loading animation
+    initLoadingAnimation();
+    
     // Initialize GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    
+    // Setup creative background
+    setupCreativeBackground();
     
     // Create 3D scene
     setup3DScene();
@@ -24,9 +30,203 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup navigation
     setupNavigation();
     
-    // Form handling
-    setupFormHandling();
+    // Animate floating skill elements
+    animateFloatingElements();
+    
+    // Animate floating letters
+    animateFloatingLetters();
+    
+    // Update copyright year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
 });
+
+// Initialize loading animation
+function initLoadingAnimation() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const progressBar = document.querySelector('.loading-progress-bar');
+    const percentageText = document.querySelector('.loading-percentage');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 10;
+        
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            
+            // After reaching 100%, wait 500ms then hide the loading screen
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                
+                // Remove from DOM after transition completes
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+                
+                // Trigger a nice animation for the entire page content
+                gsap.from('body > *:not(#loading-screen, #background-canvas)', {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.1,
+                    ease: 'power3.out'
+                });
+                
+            }, 500);
+        }
+        
+        // Update the loading bar and percentage
+        progressBar.style.width = `${progress}%`;
+        percentageText.textContent = `${Math.floor(progress)}%`;
+    }, 150);
+    
+    // Simulate loading resources
+    window.addEventListener('load', () => {
+        // Ensure we reach 100% quickly once everything is loaded
+        progress = Math.max(progress, 90);
+    });
+}
+
+// Setup creative background with canvas
+function setupCreativeBackground() {
+    const canvas = document.getElementById('background-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas to full window size
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    // Call resize initially and on window resize
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Create a grid of points for our background
+    const points = [];
+    const gridSize = 50; // Distance between points
+    const mouseSensitivity = 150; // How far the mouse affects points
+    
+    // Create grid points
+    for (let x = 0; x < canvas.width; x += gridSize) {
+        for (let y = 0; y < canvas.height; y += gridSize) {
+            points.push({
+                x: x,
+                y: y,
+                baseX: x,
+                baseY: y,
+                // Add a random offset to create a more organic feel
+                offsetX: Math.random() * 20 - 10,
+                offsetY: Math.random() * 20 - 10,
+                size: Math.random() * 2 + 1, // Random point size
+                // Unique speeds for organic movement
+                speedX: Math.random() * 0.2 - 0.1,
+                speedY: Math.random() * 0.2 - 0.1
+            });
+        }
+    }
+    
+    // Mouse position tracking
+    let mouseX = 0;
+    let mouseY = 0;
+    let mouseActive = false;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        mouseActive = true;
+        
+        // Hide mouse after 2 seconds of inactivity
+        clearTimeout(window.mouseTimeout);
+        window.mouseTimeout = setTimeout(() => {
+            mouseActive = false;
+        }, 2000);
+    });
+    
+    // Animation loop
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw connections between points
+        ctx.strokeStyle = 'rgba(26, 35, 126, 0.05)';
+        ctx.lineWidth = 0.5;
+        
+        // First update all point positions
+        points.forEach(point => {
+            // Apply gentle floating motion
+            point.x += point.speedX;
+            point.y += point.speedY;
+            
+            // Reverse direction at random intervals for natural movement
+            if (Math.random() < 0.005) {
+                point.speedX *= -1;
+            }
+            if (Math.random() < 0.005) {
+                point.speedY *= -1;
+            }
+            
+            // Keep within boundaries with a small random offset
+            if (Math.abs(point.x - point.baseX) > 30) {
+                point.speedX *= -1;
+            }
+            if (Math.abs(point.y - point.baseY) > 30) {
+                point.speedY *= -1;
+            }
+            
+            // Mouse influence
+            if (mouseActive) {
+                const dx = mouseX - point.x;
+                const dy = mouseY - point.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < mouseSensitivity) {
+                    const angle = Math.atan2(dy, dx);
+                    const pushX = Math.cos(angle) * (mouseSensitivity - distance) / 10;
+                    const pushY = Math.sin(angle) * (mouseSensitivity - distance) / 10;
+                    
+                    // Push away from mouse
+                    point.x -= pushX;
+                    point.y -= pushY;
+                }
+            }
+        });
+        
+        // Draw connections
+        for (let i = 0; i < points.length; i++) {
+            for (let j = i + 1; j < points.length; j++) {
+                const point1 = points[i];
+                const point2 = points[j];
+                
+                const dx = point1.x - point2.x;
+                const dy = point1.y - point2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // Only draw connections between nearby points
+                if (distance < gridSize * 1.5) {
+                    // Fade out connections based on distance
+                    const opacity = 1 - (distance / (gridSize * 1.5));
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(26, 35, 126, ${opacity * 0.05})`;
+                    ctx.moveTo(point1.x, point1.y);
+                    ctx.lineTo(point2.x, point2.y);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Draw points
+        points.forEach(point => {
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(26, 35, 126, 0.1)';
+            ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+}
 
 // Custom cursor with 3D effects
 function setupCustomCursor() {
@@ -82,6 +282,11 @@ function setupCustomCursor() {
 function setup3DScene() {
     const body = document.body;
     body.classList.add('perspective-container');
+    
+    // Add perspective to all sections
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('perspective-container');
+    });
     
     // Create tilt effect for the entire page
     document.addEventListener('mousemove', e => {
@@ -211,6 +416,10 @@ function initParticles() {
 function setupTimelineAnimations() {
     const timelineItems = document.querySelectorAll('.timeline-item');
     const timelineContainer = document.querySelector('.timeline');
+    
+    timelineItems.forEach(item => {
+        const company = item.getAttribute('data-company');
+        const content = item.querySelector('.timeline-content');
         
         // Animate timeline item when scrolled into view
         ScrollTrigger.create({
@@ -244,25 +453,17 @@ function setupTimelineAnimations() {
             gsap.to('.timeline::before', { scaleY: 1, duration: 1.5, ease: 'power3.out' });
         }
     });
-}
     
-    // Company-specific colors and icons
-    const companyInfo = {
-        'dhl': { color: '#fc0', icon: 'fa-truck', name: 'DHL' },
-        'bertrandt': { color: '#005ca9', icon: 'fa-car', name: 'Bertrandt AG' },
-        'itm': { color: '#990000', icon: 'fa-university', name: 'ITM Institut' },
-        'fkfs': { color: '#336699', icon: 'fa-tachometer-alt', name: 'FKFS Institut' },
-        'navid': { color: '#2ecc71', icon: 'fa-building', name: 'Navid' },
-        'bahman': { color: '#9b59b6', icon: 'fa-industry', name: 'Bahmanparsa' }
-    };
-    
-    // Create transition content
-    const transitionContent = document.createElement('div');
-    transitionContent.classList.add('job-transition-content');
-    transitionElement.appendChild(transitionContent);
-    
-    // Setup scroll triggers for transitions
+    // Add 3D transition effect between jobs on scroll
     let lastScrollPos = 0;
+    const companyInfo = {
+        'dhl': { color: '#fc0', name: 'DHL' },
+        'bertrandt': { color: '#005ca9', name: 'Bertrandt AG' },
+        'itm': { color: '#990000', name: 'ITM Institut' },
+        'fkfs': { color: '#336699', name: 'FKFS Institut' },
+        'navid': { color: '#2ecc71', name: 'Navid' },
+        'bahman': { color: '#9b59b6', name: 'Bahmanparsa' }
+    };
     
     window.addEventListener('scroll', () => {
         const currentPos = window.scrollY;
@@ -294,30 +495,30 @@ function setupTimelineAnimations() {
     });
     
     function showTransition(fromCompany, toCompany) {
-    const fromInfo = companyInfo[fromCompany];
-    const toInfo = companyInfo[toCompany];
-    
-    if (!fromInfo || !toInfo) return;
-    
-    // Add 3D transition effect to timeline items
-    const currentItem = document.querySelector(`.timeline-item[data-company="${fromCompany}"]`);
-    const nextItem = document.querySelector(`.timeline-item[data-company="${toCompany}"]`);
-    
-    // Current item moves back into 3D space
-    gsap.to(currentItem, {
-        z: -500,
-        opacity: 0.7,
-        scale: 0.8,
-        duration: 0.8,
-        ease: "power2.in"
-    });
-    
-    // Next item comes forward
-    gsap.fromTo(nextItem,
-        { z: -200, opacity: 0.5, scale: 0.9 },
-        { z: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power2.out" }
-    );
-}
+        const fromInfo = companyInfo[fromCompany];
+        const toInfo = companyInfo[toCompany];
+        
+        if (!fromInfo || !toInfo) return;
+        
+        // Add 3D transition effect to timeline items
+        const currentItem = document.querySelector(`.timeline-item[data-company="${fromCompany}"]`);
+        const nextItem = document.querySelector(`.timeline-item[data-company="${toCompany}"]`);
+        
+        // Current item moves back into 3D space
+        gsap.to(currentItem, {
+            z: -500,
+            opacity: 0.7,
+            scale: 0.8,
+            duration: 0.8,
+            ease: "power2.in"
+        });
+        
+        // Next item comes forward
+        gsap.fromTo(nextItem,
+            { z: -200, opacity: 0.5, scale: 0.9 },
+            { z: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power2.out" }
+        );
+    }
 }
 
 // Setup general animations
@@ -441,7 +642,6 @@ function setupAnimations() {
         // Animate contact items
         if (section.classList.contains('contact')) {
             const items = section.querySelectorAll('.contact-item');
-            const form = section.querySelector('.contact-form');
             
             gsap.fromTo(items, 
                 { opacity: 0, y: 30 },
@@ -452,22 +652,6 @@ function setupAnimations() {
                     duration: 0.6,
                     scrollTrigger: {
                         trigger: section.querySelector('.contact-info'),
-                        start: 'top 80%',
-                        end: 'bottom 20%',
-                        toggleActions: 'play none none none'
-                    }
-                }
-            );
-            
-            gsap.fromTo(form, 
-                { opacity: 0, y: 30 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    delay: 0.3,
-                    scrollTrigger: {
-                        trigger: form,
                         start: 'top 80%',
                         end: 'bottom 20%',
                         toggleActions: 'play none none none'
@@ -541,44 +725,182 @@ function setupNavigation() {
     });
 }
 
-// Form handling
-function setupFormHandling() {
-    const form = document.querySelector('.contact-form form');
+// Animate floating skill elements
+function animateFloatingElements() {
+    const floatingElements = document.querySelectorAll('.floating-element');
     
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Simple form validation
-            const name = form.querySelector('#name').value;
-            const email = form.querySelector('#email').value;
-            const message = form.querySelector('#message').value;
-            
-            if (name && email && message) {
-                // Show success message
-                const successMessage = document.createElement('div');
-                successMessage.classList.add('success-message');
-                successMessage.innerHTML = `
-                    <i class="fas fa-check-circle"></i>
-                    <h3>Message Sent!</h3>
-                    <p>Thank you for contacting me. I'll get back to you soon.</p>
-                `;
-                
-                // Replace form with success message
-                form.style.opacity = 0;
-                setTimeout(() => {
-                    form.parentNode.replaceChild(successMessage, form);
-                    
-                    // Animate success message
-                    gsap.fromTo(successMessage, 
-                        { opacity: 0, scale: 0.8 },
-                        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.5)' }
-                    );
-                }, 300);
+    // Create random animations for each element
+    floatingElements.forEach(element => {
+        const depth = parseFloat(element.getAttribute('data-depth'));
+        
+        // Float animation
+        gsap.to(element, {
+            x: `random(-${80 * depth}, ${80 * depth})`,
+            y: `random(-${40 * depth}, ${40 * depth})`,
+            rotation: `random(-${15 * depth}, ${15 * depth})`,
+            duration: 20 + Math.random() * 10,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+        
+        // Hover effect
+        element.addEventListener('mouseenter', () => {
+            gsap.to(element, {
+                scale: 1.2,
+                color: 'rgba(26, 35, 126, 0.3)',
+                borderColor: 'rgba(26, 35, 126, 0.3)',
+                duration: 0.5
+            });
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            gsap.to(element, {
+                scale: 1,
+                color: 'rgba(26, 35, 126, 0.1)',
+                borderColor: 'rgba(26, 35, 126, 0.1)',
+                duration: 0.5
+            });
+        });
+    });
+    
+    // Parallax effect on scroll
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        
+        floatingElements.forEach(element => {
+            const depth = parseFloat(element.getAttribute('data-depth'));
+            gsap.to(element, {
+                y: scrollY * depth * 0.2,
+                duration: 0.8,
+                ease: 'power1.out'
+            });
+        });
+    });
+    
+    // Parallax effect on mouse move
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const mouseY = e.clientY / window.innerHeight - 0.5;
+        
+        floatingElements.forEach(element => {
+            const depth = parseFloat(element.getAttribute('data-depth'));
+            gsap.to(element, {
+                x: mouseX * 50 * depth,
+                y: mouseY * 50 * depth,
+                duration: 1,
+                ease: 'power1.out'
+            });
+        });
+    });
+}
+
+// Animate floating letters (inspired by spasoje.dev)
+function animateFloatingLetters() {
+    const letters = document.querySelectorAll('.floating-letter');
+    
+    letters.forEach((letter, index) => {
+        // Random rotation
+        letter.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        
+        // Fade in with delay
+        gsap.fromTo(letter,
+            { opacity: 0, y: 50 },
+            { 
+                opacity: 0.08, 
+                y: 0, 
+                duration: 1.5, 
+                delay: index * 0.2,
+                ease: 'power3.out'
+            }
+        );
+        
+        // Float animation
+        gsap.to(letter, {
+            x: `random(-100, 100)`,
+            y: `random(-50, 50)`,
+            rotation: `random(-15, 15)`,
+            duration: 30 + Math.random() * 20,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+    });
+    
+    // Parallax effect on scroll
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        
+        letters.forEach((letter, index) => {
+            const depth = parseFloat(letter.getAttribute('data-depth'));
+            gsap.to(letter, {
+                y: scrollY * depth * 0.1,
+                rotation: scrollY * (index % 2 ? 0.01 : -0.01),
+                duration: 0.5
+            });
+        });
+    });
+    
+    // Interactive effect on mouse move
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const mouseY = e.clientY / window.innerHeight - 0.5;
+        
+        letters.forEach(letter => {
+            const depth = parseFloat(letter.getAttribute('data-depth'));
+            gsap.to(letter, {
+                x: mouseX * 100 * depth,
+                y: mouseY * 100 * depth,
+                rotation: mouseX * 10 * depth,
+                duration: 1,
+                ease: 'power1.out'
+            });
+        });
+    });
+    
+    // Click interaction - create temporary letter elements
+    document.addEventListener('click', (e) => {
+        // Create a temporary letter that expands from click position
+        const letterText = ['A', 'R', 'Y', 'A', 'V'][Math.floor(Math.random() * 5)];
+        const tempLetter = document.createElement('div');
+        tempLetter.classList.add('floating-letter');
+        tempLetter.textContent = letterText;
+        tempLetter.style.left = `${e.clientX - 50}px`;
+        tempLetter.style.top = `${e.clientY - 50}px`;
+        tempLetter.style.transform = 'scale(0) rotate(0deg)';
+        tempLetter.style.opacity = '0';
+        tempLetter.style.fontSize = '10rem';
+        tempLetter.style.pointerEvents = 'none';
+        
+        document.body.appendChild(tempLetter);
+        
+        gsap.to(tempLetter, {
+            scale: 1,
+            opacity: 0.08,
+            rotation: `random(-20, 20)`,
+            duration: 0.5,
+            onComplete: () => {
+                gsap.to(tempLetter, {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: 0.8,
+                    onComplete: () => {
+                        document.body.removeChild(tempLetter);
+                    }
+                });
             }
         });
-    }
+    });
 }
+
+// Call the 3D scene initialization when the page is loaded
+window.addEventListener('load', () => {
+    const scene = document.getElementById('scene-container');
+    if (scene && typeof THREE !== 'undefined') {
+        init3DScene();
+    }
+});
 
 // Initialize 3D scene for the hero section
 function init3DScene() {
@@ -586,8 +908,10 @@ function init3DScene() {
     if (typeof THREE === 'undefined') return;
     
     // Get the container
-    const container = document.getElementById('scene-container');
-    if (!container) return;
+    const container = document.createElement('div');
+    container.id = 'scene-container';
+    container.classList.add('scene-container');
+    document.querySelector('.hero').appendChild(container);
     
     // Create a scene
     const scene = new THREE.Scene();
@@ -724,6 +1048,3 @@ function init3DScene() {
     
     animate();
 }
-
-// Call the 3D scene initialization when the page is loaded
-window.addEventListener('load', init3DScene);
