@@ -9,12 +9,46 @@
     --font-size-sm: 1.1rem;  /* Small text */
 }
 
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    height: 100%;
+    perspective: var(--perspective);
+    overflow-x: hidden;
+}
+
+body {
+    /* Replace this line if it exists, or add it if not */
+    font-family: 'Raleway', 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    overflow-x: hidden;
+    font-weight: 300;
+    min-height: 100%;
+    background: radial-gradient(circle at center, #f5f5f5, #eceff1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    /* Replace this line if it exists, or add it if not */
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
 // ... existing code ...
 
 /* Timeline Section Enhancements */
 .timeline {
     position: relative;
-    max-width: 1200px;
+    max-width: 900px; 
     margin: 2rem auto;
     padding: 1rem;
 }
