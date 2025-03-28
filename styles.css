@@ -1,12 +1,12 @@
 :root {
     /* Existing color variables */
     
-    /* Larger font sizes */
-    --font-size-xl: 5rem;     /* Much larger heading */
-    --font-size-lg: 4rem;     /* Larger subheading */
-    --font-size-md: 2.8rem;   /* Larger medium headings */
-    --font-size-normal: 1.6rem; /* Much larger text */
-    --font-size-sm: 1.3rem;   /* Larger small text */
+    /* Extremely large font sizes (4x bigger) */
+    --font-size-xl: 8rem;      /* Giant heading */
+    --font-size-lg: 6rem;      /* Very large subheading */
+    --font-size-md: 4.5rem;    /* Large medium headings */
+    --font-size-normal: 2.8rem; /* Large text */
+    --font-size-sm: 2.2rem;    /* Large small text */
 }
 
 /* Reset & Base Styles */
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Timeline Section Enhancements */
 .timeline {
     position: relative;
-    max-width: 800px; /* Make timeline much narrower */
+    max-width: 600px; /* Make timeline much narrower */
     margin: 2rem auto;
     padding: 1rem;
 }
@@ -335,15 +335,32 @@ p, li {
     margin-bottom: 0.8rem;
 }
 
+/* ADD THIS NEW SECTION HERE */
+/* Text width limiters for shorter sentences */
+p, li, .about-text, .timeline-content {
+    max-width: 25ch; /* Limits text to approximately 25 characters per line */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Improve readability with larger text */
+p, li {
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+}
+
+/* Increase content padding */
+.timeline-content {
+    padding: 40px; /* Increase from 30px */
+}
+
+/* More spacing between sections */
+section {
+    padding: 8rem 0;
+}
+/* END OF NEW SECTION */
+
 /* Add 1cm spacing on left and right */
-.hero-content, 
-.about-content,
-.timeline,
-.education-timeline,
-.contact-content,
-.footer-content {
-    padding-left: 1cm;
-    padding-right: 1cm;
 }
 
 /* Enhanced hero section */
