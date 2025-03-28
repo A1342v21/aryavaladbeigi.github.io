@@ -1,33 +1,12 @@
-/* Variables */
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #1a237e; /* Midnight blue */
-    --accent-color: #607d8b; /* Blue-grey */
-    --light-color: #eceff1; /* Very light grey */
-    --dark-color: #263238; /* Dark blue-grey */
-    --text-color: #37474f; /* Dark grey for text */
-    --background-color: #f5f5f5; /* Light grey */
-    --card-background: #fff;
-    --transition-speed: 0.3s;
-    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    --perspective: 1000px;
-    --gradient-bg: linear-gradient(135deg, #1a237e 0%, #283593 50%, #303f9f 100%);
+    /* Existing color variables */
     
-    /* Company colors */
-    --dhl-color: #fc0;
-    --bertrandt-color: #005ca9;
-    --itm-color: #990000;
-    --fkfs-color: #336699;
-    --navid-color: #2ecc71;
-    --bahman-color: #9b59b6;
-
-    /* Font Sizes */
-    --font-size-xl: 3.2rem;
-    --font-size-lg: 2.4rem;  
-    --font-size-md: 1.8rem;
-    --font-size-normal: 1.1rem;
-    --font-size-sm: 0.95rem;
+    /* Update font sizes */
+    --font-size-xl: 4rem;    /* Larger heading */
+    --font-size-lg: 3rem;    /* Larger subheading */
+    --font-size-md: 2.2rem;  /* Medium headings */
+    --font-size-normal: 1.3rem; /* Larger text */
+    --font-size-sm: 1.1rem;  /* Small text */
 }
 
 // ... existing code ...
