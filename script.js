@@ -24,9 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup navigation
     setupNavigation();
     
-    // Create job transitions
-    setupJobTransitions();
-    
     // Form handling
     setupFormHandling();
 });
@@ -248,13 +245,6 @@ function setupTimelineAnimations() {
         }
     });
 }
-
-// Create job transitions effects
-function setupJobTransitions() {
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    const transitionElement = document.createElement('div');
-    transitionElement.classList.add('job-transition');
-    document.body.appendChild(transitionElement);
     
     // Company-specific colors and icons
     const companyInfo = {
