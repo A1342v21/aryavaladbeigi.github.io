@@ -214,26 +214,6 @@ function initParticles() {
 function setupTimelineAnimations() {
     const timelineItems = document.querySelectorAll('.timeline-item');
     const timelineContainer = document.querySelector('.timeline');
-    
-    // Add company logos
-    const companyLogos = {
-        'dhl': '<i class="fas fa-truck" style="color: #fc0; font-size: 1.5rem;"></i>',
-        'bertrandt': '<i class="fas fa-car" style="color: #005ca9; font-size: 1.5rem;"></i>',
-        'itm': '<i class="fas fa-university" style="color: #990000; font-size: 1.5rem;"></i>',
-        'fkfs': '<i class="fas fa-tachometer-alt" style="color: #336699; font-size: 1.5rem;"></i>',
-        'navid': '<i class="fas fa-building" style="color: #2ecc71; font-size: 1.5rem;"></i>',
-        'bahman': '<i class="fas fa-industry" style="color: #9b59b6; font-size: 1.5rem;"></i>'
-    };
-    
-    timelineItems.forEach(item => {
-        const company = item.getAttribute('data-company');
-        const content = item.querySelector('.timeline-content');
-        
-        // Create company logo
-        const logoDiv = document.createElement('div');
-        logoDiv.classList.add('company-logo');
-        logoDiv.innerHTML = companyLogos[company] || '<i class="fas fa-briefcase"></i>';
-        item.appendChild(logoDiv);
         
         // Animate timeline item when scrolled into view
         ScrollTrigger.create({
@@ -324,45 +304,30 @@ function setupJobTransitions() {
     });
     
     function showTransition(fromCompany, toCompany) {
-        const fromInfo = companyInfo[fromCompany];
-        const toInfo = companyInfo[toCompany];
-        
-        if (!fromInfo || !toInfo) return;
-        
-        // Create transition content
-        transitionContent.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: space-around; width: 100%;">
-                <div style="text-align: center; transition: transform 0.5s ease; transform: translateX(-100px);">
-                    <i class="fas ${fromInfo.icon}" style="font-size: 3rem; color: ${fromInfo.color};"></i>
-                    <h3>${fromInfo.name}</h3>
-                </div>
-                <div style="margin: 0 30px;">
-                    <i class="fas fa-arrow-right" style="font-size: 2rem;"></i>
-                </div>
-                <div style="text-align: center; transition: transform 0.5s ease; transform: translateX(100px);">
-                    <i class="fas ${toInfo.icon}" style="font-size: 3rem; color: ${toInfo.color};"></i>
-                    <h3>${toInfo.name}</h3>
-                </div>
-            </div>
-        `;
-        
-        // Show transition
-        transitionElement.classList.add('active');
-        
-        // Animate content
-        setTimeout(() => {
-            const fromEl = transitionContent.querySelector('div > div:first-child');
-            const toEl = transitionContent.querySelector('div > div:last-child');
-            
-            gsap.to(fromEl, { x: 0, duration: 0.5, ease: 'power2.out' });
-            gsap.to(toEl, { x: 0, duration: 0.5, ease: 'power2.out' });
-        }, 50);
-        
-        // Hide transition after a delay
-        setTimeout(() => {
-            transitionElement.classList.remove('active');
-        }, 1200);
-    }
+    const fromInfo = companyInfo[fromCompany];
+    const toInfo = companyInfo[toCompany];
+    
+    if (!fromInfo || !toInfo) return;
+    
+    // Add 3D transition effect to timeline items
+    const currentItem = document.querySelector(`.timeline-item[data-company="${fromCompany}"]`);
+    const nextItem = document.querySelector(`.timeline-item[data-company="${toCompany}"]`);
+    
+    // Current item moves back into 3D space
+    gsap.to(currentItem, {
+        z: -500,
+        opacity: 0.7,
+        scale: 0.8,
+        duration: 0.8,
+        ease: "power2.in"
+    });
+    
+    // Next item comes forward
+    gsap.fromTo(nextItem,
+        { z: -200, opacity: 0.5, scale: 0.9 },
+        { z: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power2.out" }
+    );
+}
 }
 
 // Setup general animations
