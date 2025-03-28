@@ -1,12 +1,12 @@
 :root {
     /* Existing color variables */
     
-    /* Update font sizes */
-    --font-size-xl: 4rem;    /* Larger heading */
-    --font-size-lg: 3rem;    /* Larger subheading */
-    --font-size-md: 2.2rem;  /* Medium headings */
-    --font-size-normal: 1.3rem; /* Larger text */
-    --font-size-sm: 1.1rem;  /* Small text */
+    /* Larger font sizes */
+    --font-size-xl: 5rem;     /* Much larger heading */
+    --font-size-lg: 4rem;     /* Larger subheading */
+    --font-size-md: 2.8rem;   /* Larger medium headings */
+    --font-size-normal: 1.6rem; /* Much larger text */
+    --font-size-sm: 1.3rem;   /* Larger small text */
 }
 
 /* Reset & Base Styles */
@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Timeline Section Enhancements */
 .timeline {
     position: relative;
-    max-width: 900px; 
+    max-width: 800px; /* Make timeline much narrower */
     margin: 2rem auto;
     padding: 1rem;
 }
