@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Add after existing Google Fonts link -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arya Valadbeigi - Portfolio</title>
@@ -10,7 +8,7 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Animate.css for additional animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!-- GSAP for advanced animations -->
@@ -23,9 +21,40 @@
 <body>
     <!-- Creative Background Canvas -->
     <canvas id="background-canvas"></canvas>
+    
+    <!-- Loading Animation -->
+    <div id="loading-screen">
+        <div class="loading-container">
+            <div class="loading-text">
+                <div class="loading-letters">
+                    <span>L</span>
+                    <span>O</span>
+                    <span>A</span>
+                    <span>D</span>
+                    <span>I</span>
+                    <span>N</span>
+                    <span>G</span>
+                </div>
+                <div class="loading-progress">
+                    <div class="loading-progress-bar"></div>
+                    <div class="loading-percentage">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Interactive Floating Letters -->
+    <div class="interactive-bg">
+        <div class="floating-letter" data-depth="0.1">A</div>
+        <div class="floating-letter" data-depth="0.2">R</div>
+        <div class="floating-letter" data-depth="0.3">Y</div>
+        <div class="floating-letter" data-depth="0.2">A</div>
+    </div>
+    
     <!-- Header -->
     <header>
         <nav>
+            <div class="logo">AV</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
@@ -62,22 +91,18 @@
         <div class="about-content">
             <div class="personality-traits">
                 <div class="trait-card">
-                    <i class="fas fa-comments"></i>
                     <h3>Kommunikativ</h3>
                     <p>In der Lage, sich auf jede Situation einzustellen.</p>
                 </div>
                 <div class="trait-card">
-                    <i class="fas fa-bullseye"></i>
                     <h3>Zielgerichtet</h3>
                     <p>Mit fleißigem, motiviertem Engagement zur Lösung.</p>
                 </div>
                 <div class="trait-card">
-                    <i class="fas fa-bolt"></i>
                     <h3>Produktiv</h3>
                     <p>Schnell in der Lage zu lernen und umzusetzen.</p>
                 </div>
                 <div class="trait-card">
-                    <i class="fas fa-lightbulb"></i>
                     <h3>Kreativ</h3>
                     <p>Mit unternehmerischem Denken und Kritikfähigkeit.</p>
                 </div>
@@ -222,26 +247,33 @@
         <div class="contact-content">
             <div class="contact-info">
                 <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
                     <p><a href="mailto:valadarya@gmail.com">valadarya@gmail.com</a></p>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
                     <p>Stuttgart, 70569 BW</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Floating Skill Elements -->
+    <div class="floating-elements">
+        <div class="floating-element" data-depth="0.2">MATLAB</div>
+        <div class="floating-element" data-depth="0.4">SQL</div>
+        <div class="floating-element" data-depth="0.3">Projektmanagement</div>
+        <div class="floating-element" data-depth="0.5">Kommunikativ</div>
+        <div class="floating-element" data-depth="0.1">Kreativ</div>
+        <div class="floating-element" data-depth="0.6">Zielorientiert</div>
+        <div class="floating-element" data-depth="0.3">Produktiv</div>
+        <div class="floating-element" data-depth="0.2">Team Player</div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>&copy; 2023. All rights reserved.</p>
+            <p>&copy; <span id="current-year">2023</span> Arya Valadbeigi. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- Custom cursor element -->
-    <div class="cursor-follower"></div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>
