@@ -1,5 +1,7 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM content loaded, initializing website...');
+    
     // Initialize the loading animation
     initLoadingAnimation();
     
@@ -305,9 +307,15 @@ function setup3DScene() {
 
 // Create hero section with 3D elements and particles
 function setupHero() {
+    console.log('Setting up hero section');
     const hero = document.querySelector('.hero');
     const heroContent = document.querySelector('.hero-content');
-    const traitCards = document.querySelectorAll('.trait-card');
+    // Changed selector to match both class structures
+    const traitCards = document.querySelectorAll('.trait-card, .personality-traits .trait-card');
+    
+    if (traitCards.length === 0) {
+        console.warn('No trait cards found. Check your HTML structure.');
+    }
     
     // Add 3D floating shapes
     const shapes = ['circle', 'square', 'triangle', 'pentagon', 'hexagon'];
@@ -358,7 +366,7 @@ function setupHero() {
         { opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: 'power3.out' }
     );
     
-    // Animate trait cards with staggered effect
+    // Animate trait cards with staggered effect (works with both class structures)
     gsap.fromTo(traitCards, 
         { opacity: 0, y: 50, scale: 0.8 },
         { 
@@ -372,10 +380,16 @@ function setupHero() {
         }
     );
     
-    gsap.fromTo([heroContent.querySelector('.email'), heroContent.querySelector('.location')], 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, delay: 1.4, stagger: 0.2, ease: 'power3.out' }
-    );
+    // Find email and location elements safely
+    const emailElement = heroContent.querySelector('.email');
+    const locationElement = heroContent.querySelector('.location');
+    
+    if (emailElement && locationElement) {
+        gsap.fromTo([emailElement, locationElement], 
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 1, delay: 1.4, stagger: 0.2, ease: 'power3.out' }
+        );
+    }
     
     // Add 3D effect to trait cards
     traitCards.forEach(card => {
@@ -474,8 +488,14 @@ function initParticles() {
 
 // Setup advanced animations for timeline items
 function setupTimelineAnimations() {
+    console.log('Setting up timeline animations');
     const timelineItems = document.querySelectorAll('.timeline-item');
     const timelineContainer = document.querySelector('.timeline');
+    
+    if (!timelineContainer) {
+        console.warn('Timeline container not found');
+        return;
+    }
     
     timelineItems.forEach(item => {
         const company = item.getAttribute('data-company');
@@ -504,14 +524,15 @@ function setupTimelineAnimations() {
         });
     });
     
-    // Animate timeline line
+    // Animate timeline line - Use a more reliable method
     ScrollTrigger.create({
         trigger: timelineContainer,
         start: 'top 80%',
         end: 'bottom 80%',
         onEnter: () => {
-               gsap.set('.timeline::before', { scaleY: 0 });
-   gsap.to('.timeline::before', { scaleY: 1, duration: 1.5, ease: 'power3.out' });
+            // Use CSS variable to control scaleY
+            gsap.set(timelineContainer, { '--scaleY': 0 });
+            gsap.to(timelineContainer, { '--scaleY': 1, duration: 1.5, ease: 'power3.out' });
         }
     });
     
@@ -584,6 +605,7 @@ function setupTimelineAnimations() {
 
 // Setup general animations
 function setupAnimations() {
+    console.log('Setting up general animations');
     // Animate sections when scrolled into view
     const sections = document.querySelectorAll('section:not(.hero)');
     
@@ -650,30 +672,39 @@ function setupAnimations() {
         // Animate contact items
         if (section.classList.contains('contact')) {
             const items = section.querySelectorAll('.contact-item');
+            const contactInfo = section.querySelector('.contact-info');
             
-            gsap.fromTo(items, 
-                { opacity: 0, y: 30 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    stagger: 0.1,
-                    duration: 0.6,
-                    scrollTrigger: {
-                        trigger: section.querySelector('.contact-info'),
-                        start: 'top 80%',
-                        end: 'bottom 20%',
-                        toggleActions: 'play none none none'
+            if (contactInfo && items.length > 0) {
+                gsap.fromTo(items, 
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        stagger: 0.1,
+                        duration: 0.6,
+                        scrollTrigger: {
+                            trigger: contactInfo,
+                            start: 'top 80%',
+                            end: 'bottom 20%',
+                            toggleActions: 'play none none none'
+                        }
                     }
-                }
-            );
+                );
+            }
         }
     });
 }
 
 // Setup navigation
 function setupNavigation() {
+    console.log('Setting up navigation');
     const nav = document.querySelector('nav');
     const navLinks = document.querySelectorAll('.nav-links a');
+    
+    if (!nav) {
+        console.warn('Navigation element not found');
+        return;
+    }
     
     // Hide/show navigation on scroll
     let lastScrollTop = 0;
@@ -735,11 +766,17 @@ function setupNavigation() {
 
 // Animate floating skill elements
 function animateFloatingElements() {
+    console.log('Animating floating elements');
     const floatingElements = document.querySelectorAll('.floating-element');
+    
+    if (floatingElements.length === 0) {
+        console.warn('No floating elements found');
+        return;
+    }
     
     // Create random animations for each element
     floatingElements.forEach(element => {
-        const depth = parseFloat(element.getAttribute('data-depth'));
+        const depth = parseFloat(element.getAttribute('data-depth')) || 0.5;
         
         // Float animation
         gsap.to(element, {
@@ -756,8 +793,8 @@ function animateFloatingElements() {
         element.addEventListener('mouseenter', () => {
             gsap.to(element, {
                 scale: 1.2,
-                color: 'rgba(10, 17, 70, 0.4)', // Darker blue
-                borderColor: 'rgba(10, 17, 70, 0.4)', // Darker blue
+                color: 'rgba(255, 255, 255, 0.4)', // Lighter color on hover
+                borderColor: 'rgba(255, 255, 255, 0.4)', // Lighter border on hover
                 duration: 0.5
             });
         });
@@ -765,8 +802,8 @@ function animateFloatingElements() {
         element.addEventListener('mouseleave', () => {
             gsap.to(element, {
                 scale: 1,
-                color: 'rgba(10, 17, 70, 0.2)', // Darker blue
-                borderColor: 'rgba(10, 17, 70, 0.2)', // Darker blue
+                color: 'rgba(255, 255, 255, 0.2)', // Return to original color
+                borderColor: 'rgba(255, 255, 255, 0.2)', // Return to original border
                 duration: 0.5
             });
         });
@@ -777,7 +814,7 @@ function animateFloatingElements() {
         const scrollY = window.scrollY;
         
         floatingElements.forEach(element => {
-            const depth = parseFloat(element.getAttribute('data-depth'));
+            const depth = parseFloat(element.getAttribute('data-depth')) || 0.5;
             gsap.to(element, {
                 y: scrollY * depth * 0.2,
                 duration: 0.8,
@@ -785,14 +822,14 @@ function animateFloatingElements() {
             });
         });
     });
-}
+    
     // Parallax effect on mouse move
     document.addEventListener('mousemove', (e) => {
         const mouseX = e.clientX / window.innerWidth - 0.5;
         const mouseY = e.clientY / window.innerHeight - 0.5;
         
         floatingElements.forEach(element => {
-            const depth = parseFloat(element.getAttribute('data-depth'));
+            const depth = parseFloat(element.getAttribute('data-depth')) || 0.5;
             gsap.to(element, {
                 x: mouseX * 50 * depth,
                 y: mouseY * 50 * depth,
@@ -805,7 +842,13 @@ function animateFloatingElements() {
 
 // Animate floating letters (inspired by spasoje.dev)
 function animateFloatingLetters() {
+    console.log('Animating floating letters');
     const letters = document.querySelectorAll('.floating-letter');
+    
+    if (letters.length === 0) {
+        console.warn('No floating letters found. Check if class is "floating-letter" or if container is "floating-letters"');
+        return;
+    }
     
     letters.forEach((letter, index) => {
         // Random rotation
@@ -840,7 +883,7 @@ function animateFloatingLetters() {
         const scrollY = window.scrollY;
         
         letters.forEach((letter, index) => {
-            const depth = parseFloat(letter.getAttribute('data-depth'));
+            const depth = parseFloat(letter.getAttribute('data-depth')) || 0.2;
             gsap.to(letter, {
                 y: scrollY * depth * 0.1,
                 rotation: scrollY * (index % 2 ? 0.01 : -0.01),
@@ -848,6 +891,7 @@ function animateFloatingLetters() {
             });
         });
     });
+} // Fixed missing closing brace
 
 // Create interactive particles on click
 document.addEventListener('click', (e) => {
@@ -862,7 +906,7 @@ document.addEventListener('click', (e) => {
         letter.style.top = `${e.clientY}px`;
         letter.style.fontSize = `${Math.random() * 2 + 1}rem`;
         letter.style.opacity = `${Math.random() * 0.5 + 0.2}`;
-        letter.style.color = 'rgba(10, 17, 70, 0.6)'; // Darker blue
+        letter.style.color = 'rgba(255, 255, 255, 0.6)'; // Lighter color for dark theme
         
         // Random initial rotation
         letter.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
@@ -887,179 +931,195 @@ document.addEventListener('click', (e) => {
 
 // Initialize 3D scene
 function init3DScene() {
-    // Set up Three.js scene
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    console.log('Initializing 3D scene');
     
-    // Create renderer
-    const renderer = new THREE.WebGLRenderer({ 
-        alpha: true,
-        antialias: true
-    });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    
-    // Create scene container
-    const sceneContainer = document.createElement('div');
-    sceneContainer.classList.add('scene-container');
-    sceneContainer.appendChild(renderer.domElement);
-    document.body.appendChild(sceneContainer);
-    
-    // Position camera
-    camera.position.z = 5;
-    
-    // Create geometry for geometric shapes
-    const geometries = [
-        new THREE.OctahedronGeometry(1, 0),
-        new THREE.TetrahedronGeometry(1, 0),
-        new THREE.IcosahedronGeometry(1, 0),
-        new THREE.DodecahedronGeometry(1, 0)
-    ];
-    
-    // Create materials with dark midnight/black colors
-    const materials = [
-        new THREE.MeshPhongMaterial({ 
-            color: 0x0A1146, // Midnight blue
-            shininess: 30,
-            transparent: true,
-            opacity: 0.8,
-            flatShading: true
-        }),
-        new THREE.MeshPhongMaterial({ 
-            color: 0x000000, // Black
-            shininess: 30,
-            transparent: true,
-            opacity: 0.7,
-            flatShading: true
-        }),
-        new THREE.MeshPhongMaterial({ 
-            color: 0x1C2951, // Dark navy
-            shininess: 30,
-            transparent: true,
-            opacity: 0.6,
-            flatShading: true
-        })
-    ];
-    
-    // Create objects
-    const objects = [];
-    
-    for (let i = 0; i < 10; i++) {
-        const geometry = geometries[Math.floor(Math.random() * geometries.length)];
-        const material = materials[Math.floor(Math.random() * materials.length)];
-        const object = new THREE.Mesh(geometry, material);
-        
-        // Random position
-        object.position.x = (Math.random() - 0.5) * 10;
-        object.position.y = (Math.random() - 0.5) * 10;
-        object.position.z = (Math.random() - 0.5) * 5 - 5;
-        
-        // Random rotation
-        object.rotation.x = Math.random() * Math.PI;
-        object.rotation.y = Math.random() * Math.PI;
-        
-        // Random scale
-        const scale = Math.random() * 0.8 + 0.2;
-        object.scale.set(scale, scale, scale);
-        
-        // Random rotation speed
-        object.userData = {
-            rotationSpeed: {
-                x: (Math.random() - 0.5) * 0.01,
-                y: (Math.random() - 0.5) * 0.01,
-                z: (Math.random() - 0.5) * 0.01
-            }
-        };
-        
-        scene.add(object);
-        objects.push(object);
+    // Check if Three.js is available
+    if (typeof THREE === 'undefined') {
+        console.error('THREE.js is not loaded. Make sure to include the Three.js library.');
+        return;
     }
     
-    // Create particle system
-    const particleCount = 500;
-    const particleGeometry = new THREE.BufferGeometry();
-    const particlesMaterial = new THREE.PointsMaterial({
-        color: 0x0A1146, // Midnight blue
-        size: 0.05,
-        transparent: true,
-        opacity: 0.3,
-        sizeAttenuation: true
-    });
-    
-    const positions = new Float32Array(particleCount * 3);
-    
-    for (let i = 0; i < particleCount; i++) {
-        // Create particles in a sphere
-        const radius = 10;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(Math.random() * 2 - 1);
+    try {
+        // Set up Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         
-        positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-        positions[i * 3 + 2] = radius * Math.cos(phi);
-    }
-    
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleSystem = new THREE.Points(particleGeometry, particlesMaterial);
-    scene.add(particleSystem);
-    
-    // Add lights
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
-    scene.add(ambientLight);
-    
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(1, 1, 1);
-    scene.add(directionalLight);
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-    
-    // Mouse movement tracking for parallax
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-    
-    window.addEventListener('mousemove', (event) => {
-        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    });
-    
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        // Smooth camera movement
-        targetX = mouseX * 0.5;
-        targetY = mouseY * 0.3;
-        camera.position.x += (targetX - camera.position.x) * 0.05;
-        camera.position.y += (targetY - camera.position.y) * 0.05;
-        camera.lookAt(scene.position);
-        
-        // Rotate objects
-        objects.forEach(object => {
-            object.rotation.x += object.userData.rotationSpeed.x;
-            object.rotation.y += object.userData.rotationSpeed.y;
-            object.rotation.z += object.userData.rotationSpeed.z;
+        // Create renderer
+        const renderer = new THREE.WebGLRenderer({ 
+            alpha: true,
+            antialias: true
         });
         
-        // Rotate particle system
-        particleSystem.rotation.x += 0.0003;
-        particleSystem.rotation.y += 0.0002;
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
         
-        renderer.render(scene, camera);
+        // Create scene container
+        const sceneContainer = document.createElement('div');
+        sceneContainer.classList.add('scene-container');
+        sceneContainer.appendChild(renderer.domElement);
+        document.body.appendChild(sceneContainer);
+        
+        // Position camera
+        camera.position.z = 5;
+        
+        // Create geometry for geometric shapes
+        const geometries = [
+            new THREE.OctahedronGeometry(1, 0),
+            new THREE.TetrahedronGeometry(1, 0),
+            new THREE.IcosahedronGeometry(1, 0),
+            new THREE.DodecahedronGeometry(1, 0)
+        ];
+        
+        // Create materials with dark midnight/black colors
+        const materials = [
+            new THREE.MeshPhongMaterial({ 
+                color: 0x0A1146, // Midnight blue
+                shininess: 30,
+                transparent: true,
+                opacity: 0.8,
+                flatShading: true
+            }),
+            new THREE.MeshPhongMaterial({ 
+                color: 0x000000, // Black
+                shininess: 30,
+                transparent: true,
+                opacity: 0.7,
+                flatShading: true
+            }),
+            new THREE.MeshPhongMaterial({ 
+                color: 0x1C2951, // Dark navy
+                shininess: 30,
+                transparent: true,
+                opacity: 0.6,
+                flatShading: true
+            })
+        ];
+        
+        // Create objects
+        const objects = [];
+        
+        for (let i = 0; i < 10; i++) {
+            const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+            const material = materials[Math.floor(Math.random() * materials.length)];
+            const object = new THREE.Mesh(geometry, material);
+            
+            // Random position
+            object.position.x = (Math.random() - 0.5) * 10;
+            object.position.y = (Math.random() - 0.5) * 10;
+            object.position.z = (Math.random() - 0.5) * 5 - 5;
+            
+            // Random rotation
+            object.rotation.x = Math.random() * Math.PI;
+            object.rotation.y = Math.random() * Math.PI;
+            
+            // Random scale
+            const scale = Math.random() * 0.8 + 0.2;
+            object.scale.set(scale, scale, scale);
+            
+            // Random rotation speed
+            object.userData = {
+                rotationSpeed: {
+                    x: (Math.random() - 0.5) * 0.01,
+                    y: (Math.random() - 0.5) * 0.01,
+                    z: (Math.random() - 0.5) * 0.01
+                }
+            };
+            
+            scene.add(object);
+            objects.push(object);
+        }
+        
+        // Create particle system
+        const particleCount = 500;
+        const particleGeometry = new THREE.BufferGeometry();
+        const particlesMaterial = new THREE.PointsMaterial({
+            color: 0x0A1146, // Midnight blue
+            size: 0.05,
+            transparent: true,
+            opacity: 0.3,
+            sizeAttenuation: true
+        });
+        
+        const positions = new Float32Array(particleCount * 3);
+        
+        for (let i = 0; i < particleCount; i++) {
+            // Create particles in a sphere
+            const radius = 10;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(Math.random() * 2 - 1);
+            
+            positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i * 3 + 2] = radius * Math.cos(phi);
+        }
+        
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleSystem = new THREE.Points(particleGeometry, particlesMaterial);
+        scene.add(particleSystem);
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Mouse movement tracking for parallax
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Smooth camera movement
+            targetX = mouseX * 0.5;
+            targetY = mouseY * 0.3;
+            camera.position.x += (targetX - camera.position.x) * 0.05;
+            camera.position.y += (targetY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+            
+            // Rotate objects
+            objects.forEach(object => {
+                object.rotation.x += object.userData.rotationSpeed.x;
+                object.rotation.y += object.userData.rotationSpeed.y;
+                object.rotation.z += object.userData.rotationSpeed.z;
+            });
+            
+            // Rotate particle system
+            particleSystem.rotation.x += 0.0003;
+            particleSystem.rotation.y += 0.0002;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        console.log('3D scene initialized successfully');
+    } catch (error) {
+        console.error('Error initializing 3D scene:', error);
     }
-    
-    animate();
 }
 
 // Create a function to check if an element is in viewport
 function isInViewport(element) {
+    if (!element) return false;
+    
     const rect = element.getBoundingClientRect();
     return (
         rect.top >= 0 &&
@@ -1075,10 +1135,21 @@ let hasScrolled = false;
 window.addEventListener('scroll', () => {
     if (!hasScrolled) {
         hasScrolled = true;
+        console.log('User has scrolled, initializing 3D scene');
         
         // Start 3D scene once the user begins scrolling
         if (typeof THREE !== 'undefined') {
             init3DScene();
+        } else {
+            console.warn('THREE.js is not available. 3D scene will not be initialized.');
         }
     }
 });
+
+// Add an error handler to catch and display global errors
+window.addEventListener('error', function(e) {
+    console.error('Global error:', e.error);
+});
+
+// Log when script is fully loaded
+console.log('Script.js fully loaded and ready');
