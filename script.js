@@ -148,7 +148,7 @@ function setupCreativeBackground() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         // Draw connections between points
-        ctx.strokeStyle = 'rgba(26, 35, 126, 0.05)';
+        ctx.strokeStyle = 'rgba(10, 17, 70, 0.05)'; // Darker midnight blue
         ctx.lineWidth = 0.5;
         
         // First update all point positions
@@ -206,7 +206,7 @@ function setupCreativeBackground() {
                     // Fade out connections based on distance
                     const opacity = 1 - (distance / (gridSize * 1.5));
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(26, 35, 126, ${opacity * 0.05})`;
+                    ctx.strokeStyle = `rgba(10, 17, 70, ${opacity * 0.08})`; // Darker blue with higher opacity
                     ctx.moveTo(point1.x, point1.y);
                     ctx.lineTo(point2.x, point2.y);
                     ctx.stroke();
@@ -217,7 +217,7 @@ function setupCreativeBackground() {
         // Draw points
         points.forEach(point => {
             ctx.beginPath();
-            ctx.fillStyle = 'rgba(26, 35, 126, 0.1)';
+            ctx.fillStyle = 'rgba(10, 17, 70, 0.15)'; // Darker blue with higher opacity
             ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
             ctx.fill();
         });
@@ -250,14 +250,14 @@ function setupCustomCursor() {
         link.addEventListener('mouseenter', () => {
             cursor.style.width = '50px';
             cursor.style.height = '50px';
-            cursor.style.backgroundColor = 'rgba(26, 35, 126, 0.2)';
+            cursor.style.backgroundColor = 'rgba(10, 17, 70, 0.3)'; // Darker blue
             cursor.style.mixBlendMode = 'difference';
         });
         
         link.addEventListener('mouseleave', () => {
             cursor.style.width = '30px';
             cursor.style.height = '30px';
-            cursor.style.backgroundColor = 'rgba(26, 35, 126, 0.4)';
+            cursor.style.backgroundColor = 'rgba(10, 17, 70, 0.5)'; // Darker blue
             cursor.style.mixBlendMode = 'normal';
         });
     });
@@ -307,10 +307,11 @@ function setup3DScene() {
 function setupHero() {
     const hero = document.querySelector('.hero');
     const heroContent = document.querySelector('.hero-content');
+    const traitCards = document.querySelectorAll('.trait-card');
     
     // Add 3D floating shapes
     const shapes = ['circle', 'square', 'triangle', 'pentagon', 'hexagon'];
-    const colors = ['rgba(26, 35, 126, 0.05)', 'rgba(96, 125, 139, 0.05)', 'rgba(38, 50, 56, 0.05)'];
+    const colors = ['rgba(10, 17, 70, 0.05)', 'rgba(0, 0, 0, 0.05)', 'rgba(20, 30, 80, 0.05)']; // Darker colors
     
     for (let i = 0; i < 20; i++) {
         const shape = document.createElement('div');
@@ -346,11 +347,68 @@ function setupHero() {
         hero.insertBefore(shape, heroContent);
     }
     
-    // Animate hero content
-    gsap.fromTo(heroContent, 
+    // Animate hero content with staggered effect
+    gsap.fromTo(heroContent.querySelector('h1'), 
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out' }
+        { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }
     );
+    
+    gsap.fromTo(heroContent.querySelector('.tagline'), 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: 'power3.out' }
+    );
+    
+    // Animate trait cards with staggered effect
+    gsap.fromTo(traitCards, 
+        { opacity: 0, y: 50, scale: 0.8 },
+        { 
+            opacity: 1, 
+            y: 0, 
+            scale: 1,
+            duration: 0.8, 
+            stagger: 0.15,
+            delay: 0.6,
+            ease: 'back.out(1.7)'
+        }
+    );
+    
+    gsap.fromTo([heroContent.querySelector('.email'), heroContent.querySelector('.location')], 
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, delay: 1.4, stagger: 0.2, ease: 'power3.out' }
+    );
+    
+    // Add 3D effect to trait cards
+    traitCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (centerY - y) / 10;
+            const rotateY = (x - centerX) / 10;
+            
+            gsap.to(card, {
+                rotateX: rotateX,
+                rotateY: rotateY,
+                scale: 1.05,
+                duration: 0.5,
+                ease: 'power2.out'
+            });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                rotateX: 0,
+                rotateY: 0,
+                scale: 1,
+                duration: 0.5,
+                ease: 'power2.out'
+            });
+        });
+    });
     
     // Add scroll indicator
     const scrollIndicator = document.createElement('div');
@@ -393,8 +451,10 @@ function initParticles() {
         
         // Random opacity and color
         const opacity = Math.random() * 0.3 + 0.1;
-        const hue = Math.random() > 0.5 ? 240 : 210; // Blue or grey hue
-        particle.style.backgroundColor = `hsla(${hue}, 70%, 50%, ${opacity})`;
+        // Choose between midnight blue and black
+        const isBlue = Math.random() > 0.3;
+        const color = isBlue ? `hsla(240, 75%, 15%, ${opacity})` : `hsla(0, 0%, 0%, ${opacity})`;
+        particle.style.backgroundColor = color;
         particle.style.borderRadius = '50%';
         
         // Apply animation
@@ -547,59 +607,6 @@ function setupAnimations() {
             );
         }
         
-        // Animate personality traits
-        if (section.classList.contains('about')) {
-            const traits = section.querySelectorAll('.trait-card');
-            
-            gsap.fromTo(traits, 
-                { opacity: 0, y: 50 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    stagger: 0.1,
-                    duration: 0.6,
-                    ease: 'back.out(1.5)',
-                    scrollTrigger: {
-                        trigger: section.querySelector('.personality-traits'),
-                        start: 'top 80%',
-                        end: 'bottom 20%',
-                        toggleActions: 'play none none none'
-                    }
-                }
-            );
-            
-            // Add 3D effect to trait cards
-            traits.forEach(trait => {
-                trait.addEventListener('mousemove', (e) => {
-                    const rect = trait.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = (centerY - y) / 10;
-                    const rotateY = (x - centerX) / 10;
-                    
-                    gsap.to(trait, {
-                        rotateX: rotateX,
-                        rotateY: rotateY,
-                        duration: 0.5,
-                        ease: 'power2.out'
-                    });
-                });
-                
-                trait.addEventListener('mouseleave', () => {
-                    gsap.to(trait, {
-                        rotateX: 0,
-                        rotateY: 0,
-                        duration: 0.5,
-                        ease: 'power2.out'
-                    });
-                });
-            });
-        }
-        
         // Animate education items
         if (section.classList.contains('education')) {
             const items = section.querySelectorAll('.education-item');
@@ -748,8 +755,8 @@ function animateFloatingElements() {
         element.addEventListener('mouseenter', () => {
             gsap.to(element, {
                 scale: 1.2,
-                color: 'rgba(26, 35, 126, 0.3)',
-                borderColor: 'rgba(26, 35, 126, 0.3)',
+                color: 'rgba(10, 17, 70, 0.4)', // Darker blue
+                borderColor: 'rgba(10, 17, 70, 0.4)', // Darker blue
                 duration: 0.5
             });
         });
@@ -757,8 +764,8 @@ function animateFloatingElements() {
         element.addEventListener('mouseleave', () => {
             gsap.to(element, {
                 scale: 1,
-                color: 'rgba(26, 35, 126, 0.1)',
-                borderColor: 'rgba(26, 35, 126, 0.1)',
+                color: 'rgba(10, 17, 70, 0.2)', // Darker blue
+                borderColor: 'rgba(10, 17, 70, 0.2)', // Darker blue
                 duration: 0.5
             });
         });
@@ -807,7 +814,7 @@ function animateFloatingLetters() {
         gsap.fromTo(letter,
             { opacity: 0, y: 50 },
             { 
-                opacity: 0.08, 
+                opacity: 0.10, 
                 y: 0, 
                 duration: 1.5, 
                 delay: index * 0.2,
@@ -840,168 +847,169 @@ function animateFloatingLetters() {
             });
         });
     });
+
+// Create interactive particles on click
+document.addEventListener('click', (e) => {
+    // Create temp letters that expand from click point
+    const letters = ['A', 'R', 'Y', 'A', 'V'];
     
-    // Interactive effect on mouse move
-    document.addEventListener('mousemove', (e) => {
-        const mouseX = e.clientX / window.innerWidth - 0.5;
-        const mouseY = e.clientY / window.innerHeight - 0.5;
+    for (let i = 0; i < 5; i++) {
+        const letter = document.createElement('div');
+        letter.classList.add('temp-letter');
+        letter.textContent = letters[Math.floor(Math.random() * letters.length)];
+        letter.style.left = `${e.clientX}px`;
+        letter.style.top = `${e.clientY}px`;
+        letter.style.fontSize = `${Math.random() * 2 + 1}rem`;
+        letter.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+        letter.style.color = 'rgba(10, 17, 70, 0.6)'; // Darker blue
         
-        letters.forEach(letter => {
-            const depth = parseFloat(letter.getAttribute('data-depth'));
-            gsap.to(letter, {
-                x: mouseX * 100 * depth,
-                y: mouseY * 100 * depth,
-                rotation: mouseX * 10 * depth,
-                duration: 1,
-                ease: 'power1.out'
-            });
-        });
-    });
-    
-    // Click interaction - create temporary letter elements
-    document.addEventListener('click', (e) => {
-        // Create a temporary letter that expands from click position
-        const letterText = ['A', 'R', 'Y', 'A', 'V'][Math.floor(Math.random() * 5)];
-        const tempLetter = document.createElement('div');
-        tempLetter.classList.add('floating-letter');
-        tempLetter.textContent = letterText;
-        tempLetter.style.left = `${e.clientX - 50}px`;
-        tempLetter.style.top = `${e.clientY - 50}px`;
-        tempLetter.style.transform = 'scale(0) rotate(0deg)';
-        tempLetter.style.opacity = '0';
-        tempLetter.style.fontSize = '10rem';
-        tempLetter.style.pointerEvents = 'none';
+        // Random initial rotation
+        letter.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
         
-        document.body.appendChild(tempLetter);
+        document.body.appendChild(letter);
         
-        gsap.to(tempLetter, {
-            scale: 1,
-            opacity: 0.08,
-            rotation: `random(-20, 20)`,
-            duration: 0.5,
+        // Animate and remove
+        gsap.to(letter, {
+            x: Math.random() * 200 - 100,
+            y: Math.random() * 200 - 100,
+            opacity: 0,
+            fontSize: `${Math.random() * 5 + 3}rem`,
+            rotation: Math.random() * 180 - 90,
+            duration: 2,
+            ease: 'power2.out',
             onComplete: () => {
-                gsap.to(tempLetter, {
-                    scale: 0,
-                    opacity: 0,
-                    duration: 0.5,
-                    delay: 0.8,
-                    onComplete: () => {
-                        document.body.removeChild(tempLetter);
-                    }
-                });
+                document.body.removeChild(letter);
             }
         });
-    });
-}
-
-// Call the 3D scene initialization when the page is loaded
-window.addEventListener('load', () => {
-    const scene = document.getElementById('scene-container');
-    if (scene && typeof THREE !== 'undefined') {
-        init3DScene();
     }
 });
 
-// Initialize 3D scene for the hero section
+// Initialize 3D scene
 function init3DScene() {
-    // Check if Three.js is available
-    if (typeof THREE === 'undefined') return;
-    
-    // Get the container
-    const container = document.createElement('div');
-    container.id = 'scene-container';
-    container.classList.add('scene-container');
-    document.querySelector('.hero').appendChild(container);
-    
-    // Create a scene
+    // Set up Three.js scene
     const scene = new THREE.Scene();
-    
-    // Create a camera
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    
+    // Create renderer
+    const renderer = new THREE.WebGLRenderer({ 
+        alpha: true,
+        antialias: true
+    });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    
+    // Create scene container
+    const sceneContainer = document.createElement('div');
+    sceneContainer.classList.add('scene-container');
+    sceneContainer.appendChild(renderer.domElement);
+    document.body.appendChild(sceneContainer);
+    
+    // Position camera
     camera.position.z = 5;
     
-    // Create a renderer
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
+    // Create geometry for geometric shapes
+    const geometries = [
+        new THREE.OctahedronGeometry(1, 0),
+        new THREE.TetrahedronGeometry(1, 0),
+        new THREE.IcosahedronGeometry(1, 0),
+        new THREE.DodecahedronGeometry(1, 0)
+    ];
     
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    // Create materials with dark midnight/black colors
+    const materials = [
+        new THREE.MeshPhongMaterial({ 
+            color: 0x0A1146, // Midnight blue
+            shininess: 30,
+            transparent: true,
+            opacity: 0.8,
+            flatShading: true
+        }),
+        new THREE.MeshPhongMaterial({ 
+            color: 0x000000, // Black
+            shininess: 30,
+            transparent: true,
+            opacity: 0.7,
+            flatShading: true
+        }),
+        new THREE.MeshPhongMaterial({ 
+            color: 0x1C2951, // Dark navy
+            shininess: 30,
+            transparent: true,
+            opacity: 0.6,
+            flatShading: true
+        })
+    ];
+    
+    // Create objects
+    const objects = [];
+    
+    for (let i = 0; i < 10; i++) {
+        const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+        const material = materials[Math.floor(Math.random() * materials.length)];
+        const object = new THREE.Mesh(geometry, material);
+        
+        // Random position
+        object.position.x = (Math.random() - 0.5) * 10;
+        object.position.y = (Math.random() - 0.5) * 10;
+        object.position.z = (Math.random() - 0.5) * 5 - 5;
+        
+        // Random rotation
+        object.rotation.x = Math.random() * Math.PI;
+        object.rotation.y = Math.random() * Math.PI;
+        
+        // Random scale
+        const scale = Math.random() * 0.8 + 0.2;
+        object.scale.set(scale, scale, scale);
+        
+        // Random rotation speed
+        object.userData = {
+            rotationSpeed: {
+                x: (Math.random() - 0.5) * 0.01,
+                y: (Math.random() - 0.5) * 0.01,
+                z: (Math.random() - 0.5) * 0.01
+            }
+        };
+        
+        scene.add(object);
+        objects.push(object);
+    }
+    
+    // Create particle system
+    const particleCount = 500;
+    const particleGeometry = new THREE.BufferGeometry();
+    const particlesMaterial = new THREE.PointsMaterial({
+        color: 0x0A1146, // Midnight blue
+        size: 0.05,
+        transparent: true,
+        opacity: 0.3,
+        sizeAttenuation: true
+    });
+    
+    const positions = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount; i++) {
+        // Create particles in a sphere
+        const radius = 10;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(Math.random() * 2 - 1);
+        
+        positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+        positions[i * 3 + 2] = radius * Math.cos(phi);
+    }
+    
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleSystem = new THREE.Points(particleGeometry, particlesMaterial);
+    scene.add(particleSystem);
+    
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
     scene.add(ambientLight);
     
-    // Add directional light
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(0, 1, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(1, 1, 1);
     scene.add(directionalLight);
-    
-    // Create a group for all objects
-    const group = new THREE.Group();
-    scene.add(group);
-    
-    // Create geometric shapes with midnight blue and grey theme
-    const shapes = [];
-    const geometry1 = new THREE.TorusGeometry(1, 0.3, 16, 100);
-    const geometry2 = new THREE.OctahedronGeometry(0.8);
-    const geometry3 = new THREE.TetrahedronGeometry(0.7);
-    const geometry4 = new THREE.IcosahedronGeometry(0.6);
-    
-    // Create materials with nice colors
-    const material1 = new THREE.MeshPhongMaterial({ 
-        color: 0x1a237e, // Midnight blue
-        shininess: 100,
-        transparent: true,
-        opacity: 0.8
-    });
-    
-    const material2 = new THREE.MeshPhongMaterial({ 
-        color: 0x607d8b, // Blue-grey
-        shininess: 100, 
-        transparent: true,
-        opacity: 0.7
-    });
-    
-    // Create meshes
-    const torus = new THREE.Mesh(geometry1, material1);
-    torus.position.set(-2, 0.5, 0);
-    group.add(torus);
-    shapes.push(torus);
-    
-    const octahedron = new THREE.Mesh(geometry2, material2);
-    octahedron.position.set(2, -0.5, 0);
-    group.add(octahedron);
-    shapes.push(octahedron);
-    
-    const tetrahedron = new THREE.Mesh(geometry3, material1);
-    tetrahedron.position.set(0, 1.5, -1);
-    group.add(tetrahedron);
-    shapes.push(tetrahedron);
-    
-    const icosahedron = new THREE.Mesh(geometry4, material2);
-    icosahedron.position.set(0, -1.5, -1);
-    group.add(icosahedron);
-    shapes.push(icosahedron);
-    
-    // Add particles
-    const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = 500;
-    
-    const posArray = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount * 3; i++) {
-        // Create particles in a sphere around the origin
-        posArray[i] = (Math.random() - 0.5) * 10;
-    }
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-    const particleMaterial = new THREE.PointsMaterial({
-        size: 0.02,
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.7
-    });
-    
-    const particleMesh = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particleMesh);
     
     // Handle window resize
     window.addEventListener('resize', () => {
@@ -1010,13 +1018,13 @@ function init3DScene() {
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // Mouse interaction
+    // Mouse movement tracking for parallax
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
     let targetY = 0;
     
-    document.addEventListener('mousemove', (event) => {
+    window.addEventListener('mousemove', (event) => {
         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
         mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     });
@@ -1025,26 +1033,51 @@ function init3DScene() {
     function animate() {
         requestAnimationFrame(animate);
         
-        // Smooth mouse follow
-        targetX = mouseX * 0.3;
+        // Smooth camera movement
+        targetX = mouseX * 0.5;
         targetY = mouseY * 0.3;
-        group.rotation.y += 0.05 * (targetX - group.rotation.y);
-        group.rotation.x += 0.05 * (targetY - group.rotation.x);
+        camera.position.x += (targetX - camera.position.x) * 0.05;
+        camera.position.y += (targetY - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
         
-        // Animate each shape
-        shapes.forEach((shape, i) => {
-            shape.rotation.x += 0.003 * (i + 1);
-            shape.rotation.y += 0.005 * (i + 1);
-            
-            // Subtle floating motion
-            shape.position.y += Math.sin(Date.now() * 0.001 + i) * 0.002;
+        // Rotate objects
+        objects.forEach(object => {
+            object.rotation.x += object.userData.rotationSpeed.x;
+            object.rotation.y += object.userData.rotationSpeed.y;
+            object.rotation.z += object.userData.rotationSpeed.z;
         });
         
-        // Rotate particle system slowly
-        particleMesh.rotation.y += 0.0005;
+        // Rotate particle system
+        particleSystem.rotation.x += 0.0003;
+        particleSystem.rotation.y += 0.0002;
         
         renderer.render(scene, camera);
     }
     
     animate();
 }
+
+// Create a function to check if an element is in viewport
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// Initialize the website when user scrolls to various sections
+let hasScrolled = false;
+
+window.addEventListener('scroll', () => {
+    if (!hasScrolled) {
+        hasScrolled = true;
+        
+        // Start 3D scene once the user begins scrolling
+        if (typeof THREE !== 'undefined') {
+            init3DScene();
+        }
+    }
+});
