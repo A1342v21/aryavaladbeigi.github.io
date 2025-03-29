@@ -510,7 +510,8 @@ function setupTimelineAnimations() {
         start: 'top 80%',
         end: 'bottom 80%',
         onEnter: () => {
-            gsap.to('.timeline::before', { scaleY: 1, duration: 1.5, ease: 'power3.out' });
+               gsap.set('.timeline::before', { scaleY: 0 });
+   gsap.to('.timeline::before', { scaleY: 1, duration: 1.5, ease: 'power3.out' });
         }
     });
     
@@ -784,7 +785,7 @@ function animateFloatingElements() {
             });
         });
     });
-    
+}
     // Parallax effect on mouse move
     document.addEventListener('mousemove', (e) => {
         const mouseX = e.clientX / window.innerWidth - 0.5;
